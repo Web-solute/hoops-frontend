@@ -7,6 +7,12 @@ export const Container = styled.div`
     padding: 30px;
 `;
 
+export const Flex = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 export const Subtitle = styled.div`
     margin-top: 50px;
     font-style: normal;

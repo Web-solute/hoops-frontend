@@ -23,7 +23,7 @@ function Signup() {
                 <Notice bottom='10px'>학생증 사진을 넣어주세요</Notice>
                 <Form.Control type="file" />
             </Form.Group>
-            <Submitbutton type="submit" value={"회원가입 →"}></Submitbutton>
+            <Submitbutton type="submit" value={"가입하기 →"}></Submitbutton>
             <Authtext>
                 이미 회원이신가요? <Link to={routes.home} style={{ textDecoration: 'none', color: '#565656' }}>로그인</Link>
             </Authtext>

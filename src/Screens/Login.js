@@ -1,4 +1,4 @@
-import { Container, Subtitle, Input, Submitbutton, Authtext } from "../Components/shared";
+import { Container, Subtitle, Input, Submitbutton, Authtext, Flex } from "../Components/shared";
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import { useForm } from "react-hook-form";
@@ -59,6 +59,7 @@ function Login() {
         <Container>
             <Subtitle>로그인</Subtitle>
             <form onSubmit={handleSubmit(onSubmitValid)}>
+                <Flex>
                 <Input 
                     ref={register({
                         required:"StudentId is Required",
@@ -86,6 +87,7 @@ function Login() {
                 />
                 {errors?.password?.message}
                 <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid}></Submitbutton>
+                </Flex>
             </form>
             <Authtext>
                 계정이 없으신가요? <Link to={routes.signUp} style={{ textDecoration: 'none', color: '#565656' }}>회원가입</Link>
