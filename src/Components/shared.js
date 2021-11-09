@@ -22,6 +22,7 @@ export const Input = styled.input`
         width: 100%;
         height: 50px;
     }
+    border: 0.5px solid ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
     padding: 0 20px;
     margin-top: 25px;
     margin-botton: 10px;
