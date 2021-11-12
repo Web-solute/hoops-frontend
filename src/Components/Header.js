@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from '../logo.png'
+import logo from '../images/logo.png'
 
 const HeaderContainer = styled.div`
     height: 65px;

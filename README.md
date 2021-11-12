@@ -8,4 +8,4 @@
 | 웹 UI 개발 링크 | [Figma](https://www.figma.com/file/OEHffeqAsD5BzfhQLZ1vTP/hoops?node-id=0%3A1) |
 
 ## Architecture
-<img src="/architecture.png" height="400">
+<img src="src/images/architecture.png" height="300">
