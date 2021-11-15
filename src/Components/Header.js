@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import logo from '../images/logo.png'
+import logo from '../images/logo.png';
+import { Link } from "react-router-dom";
+import routes from "../routes";
 
 const HeaderContainer = styled.div`
     height: 65px;
@@ -18,7 +20,9 @@ function Header() {
     return (
         <HeaderContainer>
             <LogoContainer>
-                <img src={logo} alt='logo'/>
+                <Link to={routes.home}>
+                    <img src={logo} alt='logo'/>
+                </Link>
             </LogoContainer>
         </HeaderContainer>
     );

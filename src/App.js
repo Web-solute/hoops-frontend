@@ -2,6 +2,8 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./Screens/Home";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
+import Reservation from "./Screens/Reservation";
+import Mypage from "./Screens/Mypage";
 import routes from "./routes";
 import { GlobalStyles } from "./styles";
 import Header from "./Components/Header";
@@ -28,7 +30,13 @@ function App() {
                 <Signup/>
               </Route>
             ):null}
-          </Switch>
+            <Route path={routes.reservation}>
+              <Reservation/>
+            </Route>
+            <Route path={routes.myPage}>
+              <Mypage/>
+            </Route>
+        </Switch>
       </Router>
     </ApolloProvider>
   );

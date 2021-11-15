@@ -14,7 +14,7 @@ export const Flex = styled.div`
 `;
 
 export const Subtitle = styled.div`
-    margin-top: 50px;
+    margin-top: ${ props => props.top };
     font-style: normal;
     font-weight: normal;
     font-size: 22px;
@@ -56,8 +56,8 @@ export const Submitbutton = styled.input`
     font-size: 17px;
 `;
 
-export const Authtext = styled.div`
-    margin-top: 40px;
+export const Smalltext = styled.div`
+    margin-top: ${ props => props.top };
     font-size: 16px;
     color: #858585;
 `;
