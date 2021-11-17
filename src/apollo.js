@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client";
+import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client";
+import {setContext} from "@apollo/client/link/context";
 //Reactive Variables 사용 --> RV: prop을 사용하지않고 Component 사이에 데이터 공유하는 방식
 
 const TOKEN = "token";
@@ -13,9 +14,21 @@ export const logUserOut = () => {
     window.location.reload();
 }
 
+const httpLink = createHttpLink({
+    uri:"http://localhost:4000/graphql",
+});
+
+const authLink = setContext((_,{headers}) => {
+    return {
+        headers: {
+            ...headers,
+            token:localStorage.getItem(TOKEN)
+        }
+    }
+})
 
 export const client = new ApolloClient({
-    uri:"http://localhost:4000/graphql",
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache()
 });
 //ApolloClient 백엔드와 다리 역할 --> 얘를 세팅해야 데이터 주고받기가 가능해짐
