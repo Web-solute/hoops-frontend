@@ -13,14 +13,6 @@ export const Flex = styled.div`
     align-items: center;
 `;
 
-export const Subtitle = styled.div`
-    margin-top: ${ props => props.top };
-    font-style: normal;
-    font-weight: normal;
-    font-size: 22px;
-    color: #666666;
-`;
-
 export const Input = styled.input`
     width: 400px;
     height: 50px;
@@ -45,7 +37,7 @@ export const Submitbutton = styled.input`
     border:none;
     border-radius: 30px;
     margin-top:30px;
-    margin-left: 200px;
+    margin-left: ${ props => props.left };
     background-color: #00C5A7;
     color: white;
     text-align:center;
@@ -56,8 +48,14 @@ export const Submitbutton = styled.input`
     font-size: 17px;
 `;
 
-export const Smalltext = styled.div`
+export const Subtitle = styled.span`
     margin-top: ${ props => props.top };
-    font-size: 16px;
+    font-size: ${ props => props.size };
+    color: #666666;
+`;
+
+export const Smalltext = styled.span`
+    margin-top: ${ props => props.top };
+    font-size: ${ props => props.size };
     color: #858585;
 `;

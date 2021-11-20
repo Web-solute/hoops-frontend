@@ -44,7 +44,7 @@ function Home() {
             <Link>
                 <img src={QR_button} alt='QR_button'/>
             </Link>
-            <Subtitle top="20px">{data?.me?.name}</Subtitle>
+            <Subtitle top="20px" size="22px">{data?.me?.name}</Subtitle>
             <Smalltext top="10px">{data?.me?.studentId}</Smalltext>
             <Smalltext top="10px">{data?.me?.major}</Smalltext>
             <Buttoncontainer>

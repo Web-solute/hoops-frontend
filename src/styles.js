@@ -13,7 +13,6 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'GmarketSansMedium'
     }
     body{
-        font-size:17px;
-        text-align: center;
+        font-size:16px;
     }
 `;

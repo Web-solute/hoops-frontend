@@ -57,7 +57,7 @@ function Login() {
 
     return (
         <Container>
-            <Subtitle top="50px">로그인</Subtitle>
+            <Subtitle top="50px" size="22px">로그인</Subtitle>
             <form onSubmit={handleSubmit(onSubmitValid)}>
                 <Flex>
                 <Input 
@@ -86,7 +86,7 @@ function Login() {
                     hasError={Boolean(errors?.password?.message)}
                 />
                 {errors?.password?.message}
-                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid}></Submitbutton>
+                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} left="270px"></Submitbutton>
                 </Flex>
             </form>
             <Smalltext top="40px">
