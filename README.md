@@ -1,4 +1,5 @@
 # 🔗 hoops
+<img src="src/images/logo2.png" height="150">
 한국외대 스터디룸 예약 출입통제 서비스
 
 ## Prototype
