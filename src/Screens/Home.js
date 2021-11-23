@@ -7,7 +7,8 @@ import mypage_button from '../images/mypage_button.png';
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import {gql, useQuery, useReactiveVar} from "@apollo/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import QRmodal from "../Components/QRmodal";
 
 const Buttoncontainer = styled.div`
     margin-top: 50px;
@@ -15,7 +16,7 @@ const Buttoncontainer = styled.div`
     flex-direction: row;
 `;
 
-const Left = styled.div`
+const Gap = styled.div`
     margin-left: 15px;
 `;
 
@@ -39,10 +40,14 @@ function Home() {
             logUserOut();
         }
     },[data]);
+
+    const [qr, setQr] = useState(false);
+
     return (
-        <Container>    
+        <Container>
+            { qr === true ? <QRmodal setQr={setQr} /> : null } 
             <Link>
-                <img src={QR_button} alt='QR_button'/>
+                <img onClick={ ()=>{ setQr(true) }} src={QR_button} alt='QR_button' />
             </Link>
             <Subtitle top="20px" size="22px">{data?.me?.name}</Subtitle>
             <Smalltext top="10px">{data?.me?.studentId}</Smalltext>
@@ -51,11 +56,10 @@ function Home() {
                 <Link to={routes.reservation}>
                     <img src={reservation_button} alt='reservation_button'/>
                 </Link>
-                <Left><Link to={routes.myPage}>
+                <Gap><Link to={routes.myPage}>
                     <img src={mypage_button} alt='mypage_button'/>
-                </Link></Left>
+                </Link></Gap>
             </Buttoncontainer>
-            {/*<button onClick={()=>logUserOut()}>Log Out</button> 로그아웃은 마이페이지에 넣을 예정*/}
         </Container>
     );
 }

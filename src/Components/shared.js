@@ -11,13 +11,14 @@ export const Flex = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: ${ props => props.padding };
 `;
 
 export const Input = styled.input`
     width: 400px;
     height: 50px;
-    @media only screen and (max-width: 400px) {
-        width: 100%;
+    @media only screen and (max-width: 450px) {
+        width: 300px;
         height: 50px;
     }
     border: 0.5px solid ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
@@ -58,4 +59,11 @@ export const Smalltext = styled.span`
     margin-top: ${ props => props.top };
     font-size: ${ props => props.size };
     color: #858585;
+`;
+
+export const Absolute = styled.div`
+    position: absolute;
+    left: ${ props => props.left };
+    right: ${ props => props.right };
+    bottom: ${ props => props.bottom };
 `;

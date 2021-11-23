@@ -86,7 +86,7 @@ function Login() {
                     hasError={Boolean(errors?.password?.message)}
                 />
                 {errors?.password?.message}
-                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} left="270px"></Submitbutton>
+                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} left="230px"></Submitbutton>
                 </Flex>
             </form>
             <Smalltext top="40px">
