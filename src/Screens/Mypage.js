@@ -32,8 +32,12 @@ const Buttoncontainer = styled.div`
 `;
 
 function Mypage() {
-    let history = useHistory();
+    const history = useHistory();
 
+    const logOut = () => {
+        history.push(routes.home,{message:"로그아웃되셨습니다!"});
+        logUserOut();
+    }
     return (
         <Container>
             <button onClick={()=>{ history.goBack(); }} style={{ border: 0, background: 'none', marginRight: '300px' }}><img src={back_button} alt='back_button'/></button>
@@ -48,7 +52,7 @@ function Mypage() {
                 <Link to={routes.home}>
                     <img src={cancel_button} alt='cancel_button'/>
                 </Link>
-                <button onClick={()=>logUserOut()} style={{ border: 0, background: 'none', marginLeft: '15px' }}>
+                <button onClick={()=>logOut()} style={{ border: 0, background: 'none', marginLeft: '15px' }}>
                     <img src={logout_button} alt='logout_button'/>
                 </button>
             </Buttoncontainer>
