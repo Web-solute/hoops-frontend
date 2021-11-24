@@ -14,6 +14,12 @@ export const Flex = styled.div`
     padding: ${ props => props.padding };
 `;
 
+export const Row = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: ${ props => props.padding };
+`;
+
 export const Input = styled.input`
     width: 400px;
     height: 50px;
@@ -57,6 +63,7 @@ export const Subtitle = styled.span`
 
 export const Smalltext = styled.span`
     margin-top: ${ props => props.top };
+    margin-bottom: ${ props => props.bottom };
     font-size: ${ props => props.size };
     color: #858585;
 `;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client";
 import {setContext} from "@apollo/client/link/context";
 import {createUploadLink} from "apollo-upload-client";

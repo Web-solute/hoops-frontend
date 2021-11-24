@@ -2,16 +2,20 @@ import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Subtitle, Input, Submitbutton, Smalltext } from "../Components/shared";
+import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex, Row } from "../Components/shared";
 import { Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import routes from "../routes";
 
 const Notice = styled.div`
     font-size: 14px;
-    margin-top: 15px;
     color: #858585;
+    margin-top: ${props => props.top};
     margin-bottom: ${props => props.bottom};
+`;
+
+const Gap = styled.div`
+    margin-left: 15px;
 `;
 
 
@@ -86,29 +90,10 @@ function Signup() {
 
     return (
         <Container>
-            <Subtitle top="50px" size="22px">회원가입</Subtitle>
-            <Notice>24시간 이내에 승인 처리 될 예정입니다.</Notice>
+            <Subtitle top="35px" size="22px">회원가입</Subtitle>
+            <Notice top="15px">24시간 이내에 승인 처리 될 예정입니다.</Notice>
             <form onSubmit={handleSubmit(onSubmitValid)} encType={'multipart/form-data'}>
-                <Input
-                    ref={register({
-                        required:"캠퍼스를 선택해주세요"
-                    })}
-                    onChange={()=>clearSignUpError()}
-                    name="campus"
-                    type="text"
-                    placeholder="캠퍼스"
-                />
-                {errors?.campus?.message}
-                <Input
-                    ref={register({
-                        required:"학과를 선택해주세요"
-                    })}
-                    onChange={()=>clearSignUpError()}
-                    name="major"
-                    type="text" 
-                    placeholder="학과"
-                />
-                {errors?.major?.message}
+                <Flex>
                 <Input
                     ref={register({
                         required:"이름을 입력해주세요"
@@ -160,8 +145,28 @@ function Signup() {
                 {/*<Input 
                     placeholder="비밀번호 확인"
                 />*/}
-                <Form.Group controlId="formFile" className="mb-3">
-                    <Notice bottom='10px'>학생증 사진을 넣어주세요</Notice>
+                <Row className="mt-3">
+                    <Form.Group controlId="formGridState">
+                    <Form.Label><Notice>캠퍼스</Notice></Form.Label>
+                    <Form.Select defaultValue="캠퍼스 선택">
+                        <option>캠퍼스 선택</option>
+                        <option>서울</option>
+                        <option>글로벌</option>
+                    </Form.Select>
+                    </Form.Group>
+                    <Gap/>
+                    <Form.Group controlId="formGridState">
+                    <Form.Label><Notice>학과</Notice></Form.Label>
+                    <Form.Select defaultValue="학과 선택">
+                        <option>학과 선택</option>
+                        <option>영미문학문화학과</option>
+                    </Form.Select>
+                    </Form.Group>
+                </Row>
+                {errors?.campus?.message}
+                {errors?.major?.message}
+                <Form.Group controlId="formFile">
+                    <Notice top="15px" bottom="10px">학생증 사진을 넣어주세요</Notice>
                     <Form.Control  
                         ref={register({
                                 required:"학생증 사진을 넣어주세요",
@@ -172,8 +177,9 @@ function Signup() {
                     />
                 </Form.Group>
                 <Submitbutton type="submit" value={loading ? "로딩 중...":"가입하기 →"} disabled={!formState.isValid|| loading} left="200px"></Submitbutton>
+                </Flex>
             </form>
-            <Smalltext top="40px">
+            <Smalltext top="40px" bottom="30px">
                 이미 회원이신가요? <Link to={routes.home} style={{ textDecoration: 'none', color: '#565656' }}>로그인</Link>
             </Smalltext>
         </Container>
