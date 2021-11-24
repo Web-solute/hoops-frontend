@@ -1,4 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -87,6 +88,11 @@ function Signup() {
         clearErrors("result");
     };
 
+    //캠퍼스-학과 선택 알고리즘
+    const [option, setOption] = useState("-1");
+    const onSelect = (event) => {
+        return setOption(() => event.target.value);
+      };
 
     return (
         <Container>
@@ -148,18 +154,31 @@ function Signup() {
                 <Row className="mt-3">
                     <Form.Group controlId="formGridState">
                     <Form.Label><Notice>캠퍼스</Notice></Form.Label>
-                    <Form.Select defaultValue="캠퍼스 선택">
-                        <option>캠퍼스 선택</option>
-                        <option>서울</option>
-                        <option>글로벌</option>
+                    <Form.Select defaultValue="캠퍼스 선택" onChange={onSelect}>
+                        <option value="-1">캠퍼스 선택</option>
+                        <option value="0">서울</option>
+                        <option value="1">글로벌</option>
                     </Form.Select>
                     </Form.Group>
                     <Gap/>
                     <Form.Group controlId="formGridState">
                     <Form.Label><Notice>학과</Notice></Form.Label>
                     <Form.Select defaultValue="학과 선택">
-                        <option>학과 선택</option>
-                        <option>영미문학문화학과</option>
+                        {option === "0" ? (
+                            <>
+                            <option>학과 선택</option>
+                            <option>서울 캠퍼스 학과들</option>
+                            </>
+                        ) : option === "1" ? (
+                            <>
+                            <option>학과 선택</option>
+                            <option>글로벌 캠퍼스 학과들</option>
+                            </>
+                        ) : <>
+                            <option>학과 선택</option>
+                            <option>캠퍼스를 선택해주세요</option>
+                            </>
+                        }
                     </Form.Select>
                     </Form.Group>
                 </Row>
