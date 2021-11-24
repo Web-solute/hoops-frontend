@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex } from "../Components/shared";
 import { Link } from "react-router-dom";
 import routes from "../routes";
@@ -16,8 +17,13 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
+    const location = useLocation();
     const {register,handleSubmit,errors,formState,setError,clearErrors,getValues} = useForm({
-        mode:"onChange"
+        mode:"onChange",
+        defaultValues:{
+            studentId:location?.state?.studentId || "",
+            password:location?.state?.password || ""
+        }
     });// 백엔드의 데이터를 받기 위해 준비하는 것 (이전의 useState를 대체하는 것)
 
     const onCompleted = (data) => {
