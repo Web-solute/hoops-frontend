@@ -66,9 +66,7 @@ function Signup() {
     });
 
     const onSubmitValid = (data) => {
-        
         const {campus,major,name,email,studentId,password,idCard} = getValues();
-        
         if(loading){
             return;
         }
@@ -154,25 +152,26 @@ function Signup() {
                 <Row className="mt-3">
                     <Form.Group controlId="formGridState">
                     <Form.Label><Notice>캠퍼스</Notice></Form.Label>
-                    <Form.Select defaultValue="캠퍼스 선택" onChange={onSelect}>
+                    <Form.Select defaultValue="캠퍼스 선택" onChange={onSelect} ref={register({required:"캠퍼스를 선택해주세요"})} name="campus">
                         <option value="-1">캠퍼스 선택</option>
-                        <option value="0">서울</option>
-                        <option value="1">글로벌</option>
+                        <option value="Seoul">서울</option>
+                        <option value="Global">글로벌</option>
                     </Form.Select>
                     </Form.Group>
                     <Gap/>
                     <Form.Group controlId="formGridState">
                     <Form.Label><Notice>학과</Notice></Form.Label>
-                    <Form.Select defaultValue="학과 선택">
-                        {option === "0" ? (
+                    <Form.Select defaultValue="학과 선택" ref={register({required:"학과를 선택해주세요"})} name="major">
+                        {option === "Seoul" ? (
                             <>
                             <option>학과 선택</option>
                             <option>서울 캠퍼스 학과들</option>
                             </>
-                        ) : option === "1" ? (
+                        ) : option === "Global" ? (
                             <>
                             <option>학과 선택</option>
-                            <option>글로벌 캠퍼스 학과들</option>
+                            <option value="Computer">컴퓨터공학부</option>
+                            <option value="ICE">정보통신공학부</option>
                             </>
                         ) : <>
                             <option>학과 선택</option>
