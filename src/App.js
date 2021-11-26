@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import Home from "./Screens/Home";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
@@ -33,9 +33,10 @@ function App() {
             <Route path={routes.reservation}>
               <Reservation/>
             </Route>
-            <Route path={routes.myPage}>
+            <Route path={`/mypage/:studentId`}>
               <Mypage/>
             </Route>
+            <Redirect to="/" />
         </Switch>
       </Router>
     </ApolloProvider>
