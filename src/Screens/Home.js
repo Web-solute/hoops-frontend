@@ -56,7 +56,7 @@ function Home() {
                 <Link to={routes.reservation}>
                     <img src={reservation_button} alt='reservation_button'/>
                 </Link>
-                <Gap><Link to={routes.myPage}>
+                <Gap><Link to={`${routes.myPage}/${data?.me?.studentId}`}>
                     <img src={mypage_button} alt='mypage_button'/>
                 </Link></Gap>
             </Buttoncontainer>

@@ -1,5 +1,8 @@
-import { logUserOut } from "../apollo";
+import { isLoggedInVar, logUserOut } from "../apollo";
+import { useParams } from "react-router-dom";
+import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { Subtitle, Smalltext, Container } from "../Components/shared";
 import cancel_button from '../images/cancel_button.png';
 import logout_button from '../images/logout_button.png';
@@ -31,9 +34,28 @@ const Buttoncontainer = styled.div`
     margin-top: 50px;
 `;
 
+const ME_QUERY = gql`
+    query me {
+        me {
+            studentId
+            name
+            major
+        }
+    }
+`;
+
 function Mypage() {
     const history = useHistory();
-
+    const hasToken = useReactiveVar(isLoggedInVar);
+    const {studentId} = useParams();
+    const {data} = useQuery(ME_QUERY,{
+        skip:!hasToken
+    });
+    useEffect(()=>{
+        if(data?.me === null){
+            logUserOut();
+        }
+    },[data]);
     const logOut = () => {
         history.push(routes.home,{message:"로그아웃되셨습니다!"});
         logUserOut();
@@ -42,7 +64,7 @@ function Mypage() {
         <Container>
             <button onClick={()=>{ history.goBack(); }} style={{ border: 0, background: 'none', marginRight: '300px' }}><img src={back_button} alt='back_button'/></button>
             <div>
-                <Subtitle size="25px">😄</Subtitle><Smalltext size="20px">안녕하세요, </Smalltext><Subtitle size="24px">김성중</Subtitle><Smalltext size="20px">님</Smalltext>
+                <Subtitle size="25px">😄</Subtitle><Smalltext size="20px">안녕하세요, </Smalltext><Subtitle size="24px">{data?.me?.name}</Subtitle><Smalltext size="20px">님</Smalltext>
             </div>
             <Subtitle top="40px" size="24px">나의 예약 내역</Subtitle>
             <ReservationBox>
