@@ -3,6 +3,7 @@ import { Flex, Absolute } from "./shared";
 import cancel from '../images/cancel.png';
 import temporary_QR from '../images/temporary_QR.png';
 import logo2 from '../images/logo2.png';
+import QRCode from 'react-qr-code';
 
 const Background = styled.div`
     position: fixed;
@@ -39,6 +40,7 @@ const QRcontainer = styled.div`
 `;
 
 const QRmodal = (props) => {
+    const {data} = props;
     return (
         <Background>
             <Window>
@@ -46,7 +48,7 @@ const QRmodal = (props) => {
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setQr(false) }} src={cancel} alt='cancel'/></Absolute>
                     <QRcontainer>
-                        <img src={temporary_QR} alt='temporary_QR'/>
+                        <QRCode value={data} />
                     </QRcontainer>
                     <Absolute bottom='20px'><img src={logo2} height="60" alt='logo2'/></Absolute>
                 </Flex>
