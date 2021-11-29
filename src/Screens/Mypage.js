@@ -2,11 +2,12 @@ import { isLoggedInVar, logUserOut } from "../apollo";
 import { useParams } from "react-router-dom";
 import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Subtitle, Smalltext, Container } from "../Components/shared";
 import cancel_button from '../images/cancel_button.png';
 import logout_button from '../images/logout_button.png';
 import back_button from '../images/back_button.png';
+import manager_button from '../images/manager_button.png';
 import { useHistory, Link } from "react-router-dom";
 import routes from "../routes";
 
@@ -78,6 +79,9 @@ function Mypage() {
                     <img src={logout_button} alt='logout_button'/>
                 </button>
             </Buttoncontainer>
+            <Link to={routes.manager}>
+                <img src={manager_button} alt='manager_button' style={{ marginTop: '20px' }}/>
+            </Link>
         </Container>
     );
 }
