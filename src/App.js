@@ -4,6 +4,7 @@ import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import Reservation from "./Screens/Reservation";
 import Mypage from "./Screens/Mypage";
+import Manager from "./Screens/Manager";
 import routes from "./routes";
 import { GlobalStyles } from "./styles";
 import Header from "./Components/Header";
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path={`/mypage/:studentId`}>
               <Mypage/>
+            </Route>
+            <Route path={routes.manager}>
+              <Manager/>
             </Route>
             <Redirect to="/" />
         </Switch>
