@@ -1,13 +1,32 @@
 import { Container } from "../Components/shared";
 import { useState } from "react";
+import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import back_button from '../images/back_button.png';
 import user_button from '../images/user_button.png';
 import room_button from '../images/room_button.png';
 
+const SEE_USERS_QUERY = gql`
+    query seeUsers {
+        seeUsers {
+            studentId
+            name
+            major
+            isManaged
+            isValid
+            idCard
+            email
+            campus
+            createdAt
+            updatedAt
+        }
+    }
+`;
+
 
 const Manager = () => {
     const history = useHistory();
+    const {data} = useQuery(SEE_USERS_QUERY);
     const [managerOption, setManagerOption] = useState(0);
     return (
         <Container>

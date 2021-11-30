@@ -41,6 +41,7 @@ const ME_QUERY = gql`
             studentId
             name
             major
+            isManaged
         }
     }
 `;
@@ -79,9 +80,10 @@ function Mypage() {
                     <img src={logout_button} alt='logout_button'/>
                 </button>
             </Buttoncontainer>
-            <Link to={routes.manager}>
+            {data?.me?.isManaged ?
+                (<Link to={routes.manager}>
                 <img src={manager_button} alt='manager_button' style={{ marginTop: '20px' }}/>
-            </Link>
+            </Link>):null}
         </Container>
     );
 }
