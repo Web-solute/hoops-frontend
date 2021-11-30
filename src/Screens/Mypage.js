@@ -57,6 +57,10 @@ function Mypage() {
         if(data?.me === null){
             logUserOut();
         }
+        if(studentId !== data?.me?.studentId && data?.me?.studentId !== undefined){
+            history.push("/");
+        }
+        
     },[data]);
     const logOut = () => {
         history.push(routes.home,{message:"로그아웃되셨습니다!"});
