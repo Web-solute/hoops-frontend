@@ -1,6 +1,6 @@
 import { Container } from "../Components/shared";
 import { useState } from "react";
-import {gql, useQuery, useReactiveVar} from "@apollo/client";
+import {gql, useQuery, useMutation} from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import back_button from '../images/back_button.png';
 import user_button from '../images/user_button.png';
@@ -17,6 +17,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Checkbox } from '@material-ui/core';
 
+
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
 const SEE_USERS_QUERY = gql`
     query seeUsers {
         seeUsers {
+            id
             studentId
             name
             major
@@ -48,12 +50,35 @@ const ME_QUERY = gql`
     }
 `;
 
+const VERIFIED_USER_MUTATION = gql`
+    mutation verifiedUser($id:Int!){
+        verifiedUser(id:$id){
+            ok
+            error
+        }
+    }
+`;
+
+const MANAGED_USER_MUTATION = gql`
+    mutation managedUser($id:Int!){
+        managedUser(
+            id:$id
+        ){
+            ok
+            error
+        }
+    }
+`;
+
+
 
 const Manager = () => {
     const classes = useStyles();
     const history = useHistory();
     const {data} = useQuery(SEE_USERS_QUERY);
     const {data:Me} = useQuery(ME_QUERY);
+    const [verifiedUser] = useMutation(VERIFIED_USER_MUTATION);
+    const [managedUser] = useMutation(MANAGED_USER_MUTATION);
     const [managerOption, setManagerOption] = useState(0);
     useEffect(()=>{
         if(Me?.me?.isManaged === false && Me?.me?.isManaged === undefined){
@@ -61,6 +86,61 @@ const Manager = () => {
         }
         
     },[Me]);
+    const toggleValid = (e) => {
+        const id = Number(e.target.value);
+        const verifiedUserUpdate = (cache,result) => {
+            const {
+                data:{
+                    verifiedUser:{ok}
+                }
+            } = result;
+            if(!ok){
+                return;
+            }
+            cache.modify({
+                id:`User:${id}`,
+                fields:{
+                    isValid(prev){
+                        return !prev;
+                    }
+                }
+            });
+        }
+        verifiedUser({
+            variables:{
+                id
+            },
+            update:verifiedUserUpdate
+        });
+    };
+    const toggleManaged = (e) => {
+        const id = Number(e.target.value);
+        const ManagedUpdate = (cache,result) => {
+            const {
+                data:{
+                    managedUser:{ok}
+                }
+            } = result;
+            if(!ok){
+                return;
+            }
+            cache.modify({
+                id:`User:${id}`,
+                fields:{
+                    isManaged(prev){
+                        return !prev;
+                    }
+                }
+            });
+        }
+        managedUser({
+            variables:{
+                id
+            },
+            update:ManagedUpdate
+        });
+    };
+
     return (
         <Container>
         <button onClick={()=>{ history.goBack(); }} style={{ border: 0, background: 'none', marginRight: '300px' }}><img src={back_button} alt='back_button'/></button>
@@ -104,15 +184,15 @@ const Manager = () => {
                                         <TableCell>{user.major}</TableCell>
                                         <TableCell padding="checkbox">
                                             <Checkbox
-                                                checked={user.verified}
-                                                
+                                                checked={user.isValid}
+                                                onClick={toggleValid}
                                                 value={user.id}
                                             />
                                         </TableCell>
                                         <TableCell padding="checkbox">
                                             <Checkbox
                                                 checked={user.isManaged}
-                                                
+                                                onClick={toggleManaged}
                                                 value={user.id}
                                             />
                                         </TableCell>

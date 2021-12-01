@@ -31,6 +31,8 @@ function App() {
                 <Signup/>
               </Route>
             ):null}
+            {isLoggedIn?(
+            <>
             <Route path={routes.reservation}>
               <Reservation/>
             </Route>
@@ -40,6 +42,8 @@ function App() {
             <Route path={routes.manager}>
               <Manager/>
             </Route>
+            </>
+            ):null}
             <Redirect to="/" />
         </Switch>
       </Router>

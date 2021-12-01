@@ -25,7 +25,7 @@ const CREATE_USER_MUTATION = gql`
         $studentId:String!,
         $name:String!,
         $password:String!,
-        $major:String!,
+        $major:Major!,
         $idCard:Upload!,
         $email:String!,
         $campus:Campus!
@@ -171,7 +171,7 @@ function Signup() {
                             <>
                             <option>학과 선택</option>
                             <option value="Computer">컴퓨터공학부</option>
-                            <option value="ICE">정보통신공학부</option>
+                            <option value="Information_Communication">정보통신공학부</option>
                             </>
                         ) : <>
                             <option>학과 선택</option>
