@@ -70,6 +70,15 @@ const MANAGED_USER_MUTATION = gql`
     }
 `;
 
+const REMOVE_USER_MUTATION = gql`
+    mutation removeUser($id:Int!){
+        removeUser(id:$id){
+            ok
+            error
+        }
+    }
+`;
+
 
 
 const Manager = () => {
@@ -79,6 +88,7 @@ const Manager = () => {
     const {data:Me} = useQuery(ME_QUERY);
     const [verifiedUser] = useMutation(VERIFIED_USER_MUTATION);
     const [managedUser] = useMutation(MANAGED_USER_MUTATION);
+    const [removeUser] = useMutation(REMOVE_USER_MUTATION);
     const [managerOption, setManagerOption] = useState(0);
     useEffect(()=>{
         if(Me?.me?.isManaged === false && Me?.me?.isManaged === undefined){
@@ -140,6 +150,25 @@ const Manager = () => {
             update:ManagedUpdate
         });
     };
+    const onDeleteClick = (e) => {
+        const id = Number(e.target.value);
+        const removeUserUpdate = (cache,result) => {
+            const {
+                data:{
+                    removeUser:{ok}
+                } 
+            } = result;
+            if(ok){
+                cache.evict({id:`User:${id}`})
+            }
+        };
+        removeUser({
+            variables:{
+                id
+            },
+            update:removeUserUpdate
+        });
+    }
 
     return (
         <Container>
@@ -175,7 +204,7 @@ const Manager = () => {
                                             <Avatar src={user.idCard}/> : null}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            <button value={user.id}  >❌</button>
+                                            <button value={user.id} onClick={onDeleteClick} >❌</button>
                                         </TableCell>
                                         <TableCell>
                                             {user.studentId}
