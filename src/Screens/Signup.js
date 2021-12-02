@@ -194,7 +194,7 @@ function Signup() {
                         type="file" 
                     />
                 </Form.Group>
-                <Submitbutton type="submit" value={loading ? "로딩 중...":"가입하기 →"} disabled={!formState.isValid|| loading} left="200px"></Submitbutton>
+                <Submitbutton type="submit" value={loading ? "로딩 중...":"가입하기 →"} disabled={!formState.isValid|| loading} ml="200px"></Submitbutton>
                 </Flex>
             </form>
             <Smalltext top="40px" bottom="30px">

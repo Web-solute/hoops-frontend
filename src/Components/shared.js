@@ -21,12 +21,8 @@ export const Row = styled.div`
 `;
 
 export const Input = styled.input`
-    width: 400px;
+    width: 300px;
     height: 50px;
-    @media only screen and (max-width: 450px) {
-        width: 300px;
-        height: 50px;
-    }
     border: 0.5px solid ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
     padding: 0 20px;
     margin-top: 25px;
@@ -34,17 +30,18 @@ export const Input = styled.input`
     border-radius: 10px;
     background-color:#fafafa;
     border: 1px solid #C4C4C4;
-    box-sizing:border-box;
     &::placeholder{
         font-size: 17px;
     }
+
+    width: ${ props => props.width };
+    margin-top: ${ props => props.mt };
 `;
 
 export const Submitbutton = styled.input`
     border:none;
     border-radius: 30px;
     margin-top:30px;
-    margin-left: ${ props => props.left };
     background-color: #00C5A7;
     color: white;
     text-align:center;
@@ -53,6 +50,10 @@ export const Submitbutton = styled.input`
     width: 120px;
     height: 60px;
     font-size: 17px;
+
+    margin-left: ${ props => props.ml };
+    height: ${ props => props.height };
+    margin-top: ${ props => props.mt };
 `;
 
 export const Subtitle = styled.span`
@@ -72,5 +73,6 @@ export const Absolute = styled.div`
     position: absolute;
     left: ${ props => props.left };
     right: ${ props => props.right };
+    top: ${ props => props.top };
     bottom: ${ props => props.bottom };
 `;

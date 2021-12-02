@@ -1,12 +1,16 @@
-import { Container } from "../Components/shared";
-import { useState } from "react";
+import { Container, Absolute } from "../Components/shared";
+import { useState, useEffect } from "react";
 import {gql, useQuery, useMutation} from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import back_button from '../images/back_button.png';
 import user_button from '../images/user_button.png';
 import room_button from '../images/room_button.png';
-import { useEffect } from "react";
+import room_create_button from '../images/room_create_button.png';
+import room_update_button from '../images/room_update_button.png';
+import room_delete_button from '../images/room_delete_button.png';
+import InputModal from "../Components/Modal/InputModal";
 import Avatar from "../Components/Avatar";
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -89,7 +93,11 @@ const Manager = () => {
     const [verifiedUser] = useMutation(VERIFIED_USER_MUTATION);
     const [managedUser] = useMutation(MANAGED_USER_MUTATION);
     const [removeUser] = useMutation(REMOVE_USER_MUTATION);
+    
     const [managerOption, setManagerOption] = useState(0);
+    const [createModal, setCreateModal] = useState(false);
+    const [updateModal, setUpdateModal] = useState(false);
+
     useEffect(()=>{
         if(Me?.me?.isManaged === false && Me?.me?.isManaged === undefined){
             history.push("/");
@@ -183,7 +191,6 @@ const Manager = () => {
         </div>
         {managerOption === 0 ? (
             <>
-            <div>User List</div>
             <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
@@ -233,7 +240,17 @@ const Manager = () => {
                     </TableContainer>
             </>
         ) : <>
-            <div>Room List</div>
+                { createModal === true ? <InputModal setModal={setCreateModal} buttonText={'생성'} /> : null } 
+                { updateModal === true ? <InputModal setModal={setUpdateModal} buttonText={'수정'} /> : null }
+                <button onClick={()=>setCreateModal(true)} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
+                    <img src={room_create_button} alt='room_create_button'/>
+                </button>
+                <button onClick={()=>setUpdateModal(true)} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
+                    <img src={room_update_button} alt='room_update_button'/>
+                </button>
+                <button onClick={()=>{}} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
+                    <img src={room_delete_button} alt='room_delete_button'/>
+                </button>
             </>
         }
         </Container>

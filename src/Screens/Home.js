@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import routes from "../routes";
 import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import { useEffect, useState } from "react";
-import QRmodal from "../Components/QRmodal";
+import QRmodal from "../Components/Modal/QRModal";
 
 const Buttoncontainer = styled.div`
     margin-top: 50px;
