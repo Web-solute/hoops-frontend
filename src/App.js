@@ -31,7 +31,7 @@ function App() {
                 <Signup/>
               </Route>
             ):null}
-            {!isLoggedIn?(
+            {isLoggedIn?(
             <>
             <Route path={routes.reservation}>
               <Reservation/>
