@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Flex, Absolute } from "./shared";
-import cancel from '../images/cancel.png';
-import temporary_QR from '../images/temporary_QR.png';
-import logo2 from '../images/logo2.png';
+import { Flex, Absolute } from "../shared";
+import cancel from '../../images/cancel.png';
+import logo2 from '../../images/logo2.png';
 import QRCode from 'react-qr-code';
 
 const Background = styled.div`
