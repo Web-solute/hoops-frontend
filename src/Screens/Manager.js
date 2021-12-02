@@ -1,4 +1,4 @@
-import { Container, Absolute } from "../Components/shared";
+import { Container, Row } from "../Components/shared";
 import { useState, useEffect } from "react";
 import {gql, useQuery, useMutation} from "@apollo/client";
 import { useHistory } from "react-router-dom";
@@ -242,15 +242,17 @@ const Manager = () => {
         ) : <>
                 { createModal === true ? <InputModal setModal={setCreateModal} buttonText={'생성'} /> : null } 
                 { updateModal === true ? <InputModal setModal={setUpdateModal} buttonText={'수정'} /> : null }
-                <button onClick={()=>setCreateModal(true)} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
+                <div onClick={()=>setCreateModal(true)} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
                     <img src={room_create_button} alt='room_create_button'/>
-                </button>
-                <button onClick={()=>setUpdateModal(true)} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
-                    <img src={room_update_button} alt='room_update_button'/>
-                </button>
-                <button onClick={()=>{}} style={{ border: 0, background: 'none', marginLeft: '250px' }}>
-                    <img src={room_delete_button} alt='room_delete_button'/>
-                </button>
+                </div>
+                <Row>
+                    <div onClick={()=>setUpdateModal(true)} style={{ border: 0, background: 'none', marginLeft: '200px' }}>
+                        <img src={room_update_button} alt='room_update_button'/>
+                    </div>
+                    <div onClick={()=>{}} style={{ border: 0, background: 'none' }}>
+                        <img src={room_delete_button} alt='room_delete_button'/>
+                    </div>
+                </Row>
             </>
         }
         </Container>

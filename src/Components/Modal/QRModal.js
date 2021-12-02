@@ -1,38 +1,9 @@
 import styled from "styled-components";
 import { Flex, Absolute } from "../shared";
+import { Background, Window, Popup } from "./Modal";
 import cancel from '../../images/cancel.png';
 import logo2 from '../../images/logo2.png';
 import QRCode from 'react-qr-code';
-
-const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-`;
-
-const Window = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-`;
-
-const Popup = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    border: 1px solid #C4C4C4;
-    border-radius: 30px;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-
-    width: 300px;
-    height: 500px;
-`;
 
 const QRcontainer = styled.div`
     margin-top: 70px;
@@ -43,7 +14,7 @@ const QRmodal = (props) => {
     return (
         <Background>
             <Window>
-                <Popup>
+                <Popup height='500px'>
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setQr(false) }} src={cancel} alt='cancel'/></Absolute>
                     <QRcontainer>
