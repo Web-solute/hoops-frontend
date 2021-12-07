@@ -90,7 +90,7 @@ function Signup() {
     const [option, setOption] = useState("-1");
     const onSelect = (event) => {
         return setOption(() => event.target.value);
-      };
+    };
 
     return (
         <Container>
