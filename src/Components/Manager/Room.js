@@ -1,6 +1,6 @@
 import { Row } from "../shared";
 import { useState} from "react";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useQuery, useMutation} from "@apollo/client";
 import room_create_button from '../../images/room_create_button.png';
 import room_update_button from '../../images/room_update_button.png';
 import room_delete_button from '../../images/room_delete_button.png';
@@ -32,11 +32,41 @@ const SEE_ROOMS_QUERY = gql`
     }
 `;
 
+const DELETE_ROOM_MUTATION = gql`
+    mutation deleteRoom($id:Int!){
+        deleteRoom(id:$id){
+            ok
+            error
+        }
+    }
+`;
+
 export const Room = () => {
     const classes = useStyles();
     const {data} = useQuery(SEE_ROOMS_QUERY);
+    const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION);
     const [createModal, setCreateModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
+    const onDeleteClick = (e) => {
+        const id = Number(e.target.value);
+        const deleteRoomUpdate = (cache,result) => {
+            const {
+                data:{
+                    deleteRoom:{ok}
+                } 
+            } = result;
+            if(ok){
+                cache.evict({id:`Room:${id}`})
+            }
+        };
+        deleteRoom({
+            variables:{
+                id
+            },
+            update:deleteRoomUpdate
+        });
+    }
+
     return (
         <>  
             <TableContainer component={Paper}>
@@ -45,8 +75,8 @@ export const Room = () => {
                         <TableRow>
                             <TableCell>수정</TableCell>
                             <TableCell>삭제</TableCell>
-                            <TableCell>major</TableCell>
                             <TableCell >roomNumber</TableCell>
+                            <TableCell>major</TableCell>
                             <TableCell  >description</TableCell>
                         </TableRow>
                     </TableHead>
@@ -59,9 +89,7 @@ export const Room = () => {
                                 </div>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                <div onClick={()=>{}}>
-                                    <img src={room_delete_button} alt='room_delete_button'/>
-                                </div>
+                                    <input type="image" src={room_delete_button} value={room.id} onClick={onDeleteClick} />
                                 </TableCell>
                                 <TableCell>{room.roomNumber}</TableCell>
                                 <TableCell>{room.major}</TableCell>
