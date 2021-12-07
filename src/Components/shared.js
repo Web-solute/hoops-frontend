@@ -11,6 +11,7 @@ export const Flex = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
     padding: ${ props => props.padding };
 `;
 

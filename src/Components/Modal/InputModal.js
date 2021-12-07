@@ -69,16 +69,15 @@ const InputModal = (props) => {
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setModal(false) }} src={cancel} alt='cancel'/></Absolute>
                     <form onSubmit={handleSubmit(onSubmitValid)}>
-                        <Form.Group controlId="formGridState">
-                        <Form.Label><Notice>학과</Notice></Form.Label>
-                        <Form.Select defaultValue="캠퍼스 선택" onChange={onSelect} ref={register({required:"학과를 선택해주세요"})} name="major">
-                            <option value="-1">캠퍼스 선택</option>
+                        <Form.Group controlId="formGridState" class='mt-5'>
+                        <Form.Select defaultValue="학과 선택" onChange={onSelect} ref={register({required:"학과를 선택해주세요"})} name="major">
+                            <option value="-1">학과 선택</option>
                             <option value="Computer">컴퓨터공학부</option>
                             <option value="Information_Communication">정보통신공학부</option>
                         </Form.Select>
                         </Form.Group>
                         <Input 
-                            mt='45px' width='230px'
+                            mt='20px' width='260px'
                             ref={register({
                                 required:"방 번호를 입력해주세요",
                             })}
@@ -88,7 +87,7 @@ const InputModal = (props) => {
                             placeholder="방 번호"
                         />
                         <Input 
-                            mt='45px' width='230px'
+                            mt='20px' width='260px'
                             ref={register()}
                             onChange={()=>clearSignUpError()}
                             name="description"
@@ -96,7 +95,7 @@ const InputModal = (props) => {
                             placeholder="설명"
                         />
                         <Input 
-                            mt='45px' width='230px'
+                            mt='20px' width='260px'
                             ref={register()}
                             onChange={()=>clearSignUpError()}
                             name="open"
@@ -104,14 +103,14 @@ const InputModal = (props) => {
                             placeholder="여는 시간"
                         />
                         <Input 
-                            mt='45px' width='230px'
+                            mt='20px' width='260px'
                             ref={register()}
                             onChange={()=>clearSignUpError()}
                             name="closed"
                             type="text"  
                             placeholder="닫는 시간"
                         />
-                        <Submitbutton type="submit" value={ loading ? "Loading..." : props.buttonText} disabled={!formState.isValid|| loading}  mt='15px' height='45px' ></Submitbutton>
+                        <Submitbutton type="submit" value={ loading ? "Loading..." : props.buttonText} disabled={!formState.isValid|| loading}  ml='70px' mt='20px' height='45px' />
                     </form>
                 </Flex>
                 </Popup>
