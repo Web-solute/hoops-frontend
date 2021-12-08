@@ -7,7 +7,6 @@ import { useState } from "react";
 import { Form } from 'react-bootstrap';
 import styled from "styled-components";
 
-
 const CREATE_ROOM_MUTATION = gql`
     mutation createRoom($roomNumber:Int! $description:String $major:Major! $open:String $closed:String){
         createRoom(roomNumber:$roomNumber description:$description major:$major open:$open closed:$closed){

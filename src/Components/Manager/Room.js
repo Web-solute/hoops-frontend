@@ -28,6 +28,8 @@ const SEE_ROOMS_QUERY = gql`
             roomNumber
             description
             major
+            open
+            closed
         }
     }
 `;
@@ -47,6 +49,7 @@ export const Room = () => {
     const [deleteRoom] = useMutation(DELETE_ROOM_MUTATION);
     const [createModal, setCreateModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
+    const [Id,setId] = useState();
     const onDeleteClick = (e) => {
         const id = Number(e.target.value);
         const deleteRoomUpdate = (cache,result) => {
@@ -66,7 +69,11 @@ export const Room = () => {
             update:deleteRoomUpdate
         });
     }
-
+    const onClick = (e) => {
+        const id = Number(e.target.value);
+        setUpdateModal(true);
+        setId(id);
+    }
     return (
         <>  
             <TableContainer component={Paper}>
@@ -75,18 +82,18 @@ export const Room = () => {
                         <TableRow>
                             <TableCell>수정</TableCell>
                             <TableCell>삭제</TableCell>
-                            <TableCell >roomNumber</TableCell>
+                            <TableCell>roomNumber</TableCell>
                             <TableCell>major</TableCell>
-                            <TableCell  >description</TableCell>
+                            <TableCell>description</TableCell>
+                            <TableCell>여는 시간</TableCell>
+                            <TableCell>닫는 시간</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {data?.seeRooms?.map((room) => (
                             <TableRow key={room.id}>
                                 <TableCell component="th" scope="row">
-                                <div onClick={()=>setUpdateModal(true)} style={{ border: 0, background: 'none'}}>
-                                    <img src={room_update_button} alt='room_delete_button'/>
-                                </div>
+                                    <input type="image" src={room_update_button} alt='room_delete_button' value={room.id} onClick={onClick}  style={{ border: 0, background: 'none'}}/>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
                                     <input type="image" src={room_delete_button} value={room.id} onClick={onDeleteClick} />
@@ -94,13 +101,15 @@ export const Room = () => {
                                 <TableCell>{room.roomNumber}</TableCell>
                                 <TableCell>{room.major}</TableCell>
                                 <TableCell>{room.description}</TableCell>
+                                <TableCell>{room.open}</TableCell>
+                                <TableCell>{room.closed}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
             { createModal === true ? <InputModal setModal={setCreateModal} buttonText={'생성'} /> : null } 
-            { updateModal === true ? <UpdateModal setModal={setUpdateModal} buttonText={'수정'} /> : null }
+            { updateModal === true ? <UpdateModal setModal={setUpdateModal} value={Id} buttonText={'수정'} /> : null }
             <Row>
                 <div onClick={()=>setCreateModal(true)} style={{ border: 0, background: 'none', marginLeft: '200px' }}>
                     <img src={room_create_button} alt='room_create_button'/>
