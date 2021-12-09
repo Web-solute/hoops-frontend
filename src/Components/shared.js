@@ -7,6 +7,10 @@ export const Container = styled.div`
     padding: 30px;
 `;
 
+export const Item = styled.div`
+    width: 300px;
+`;
+
 export const Flex = styled.div`
     display: flex;
     flex-direction: column;
