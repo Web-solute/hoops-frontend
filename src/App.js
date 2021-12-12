@@ -24,14 +24,14 @@ function App() {
         <Header />
         <Switch>   
             <Route path={routes.home} exact>
-              {!isLoggedIn ? <Home/> : <Login />}
+              {isLoggedIn ? <Home/> : <Login />}
             </Route>
             {!isLoggedIn ? (
               <Route path={routes.signUp}>
                 <Signup/>
               </Route>
             ):null}
-            {!isLoggedIn?(
+            {isLoggedIn?(
             <>
             <Route path={routes.reservation}>
               <Reservation/>
