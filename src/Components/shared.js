@@ -9,6 +9,7 @@ export const Container = styled.div`
 
 export const Item = styled.div`
     width: 300px;
+    width: ${ props => props.w };
 `;
 
 export const Flex = styled.div`
