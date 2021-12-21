@@ -53,7 +53,7 @@ function Home() {
             <Smalltext top="10px">{data?.me?.studentId}</Smalltext>
             <Smalltext top="10px">{data?.me?.major}</Smalltext>
             <Buttoncontainer>
-                <Link to={routes.reservation}>
+                <Link to={routes.reservation + "/main"}>
                     <img src={reservation_button} alt='reservation_button'/>
                 </Link>
                 <Gap><Link to={`${routes.myPage}/${data?.me?.studentId}`}>
