@@ -27,21 +27,13 @@ function App() {
               {isLoggedIn ? <Home/> : <Login />}
             </Route>
             {!isLoggedIn ? (
-              <Route path={routes.signUp}>
-                <Signup/>
-              </Route>
+              <Route path={routes.signUp} component={Signup} />
             ):null}
             {isLoggedIn?(
             <>
-            <Route path={routes.reservation}>
-              <Reservation/>
-            </Route>
-            <Route path={`/mypage/:studentId`}>
-              <Mypage/>
-            </Route>
-            <Route path={routes.manager}>
-              <Manager/>
-            </Route>
+            <Route path={routes.reservation} component={Reservation} />
+            <Route path={routes.myPage + "/:studentId"} component={Mypage} />
+            <Route path={routes.manager} component={Manager} />
             </>
             ):null}
             <Redirect to="/" />

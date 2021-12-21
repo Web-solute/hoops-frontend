@@ -82,3 +82,9 @@ export const Absolute = styled.div`
     top: ${ props => props.top };
     bottom: ${ props => props.bottom };
 `;
+
+export const CheckText = styled.div`
+    font-family: sans-serif; 
+    font-size: 14px;
+    color: #666666;
+`;
