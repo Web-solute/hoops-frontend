@@ -2,7 +2,7 @@ import { Subtitle, Submitbutton, Item } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
 import { useState } from "react";
-
+import { gql,useMutation,useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import routes from '../../routes';
 
@@ -14,6 +14,10 @@ import setMinutes from "date-fns/setMinutes";
 import getHours from "date-fns/getHours"
 import getMinutes from "date-fns/getMinutes"
 
+import { from } from '@apollo/client';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+
 const SDatePicker = styled(DatePicker)`
     width: 150px;
     height: 40px;
@@ -24,6 +28,25 @@ const SDatePicker = styled(DatePicker)`
     color: #666666;
 `;
 
+const SEE_ROOM_MAJOR = gql`
+    query seeRoomMajor{
+        seeRoomMajor{
+            major
+            roomNumber
+        }
+    }
+`;
+
+const RESERVE_ROOM = gql`
+    mutation reserveRoom($major:Major! $roomNumber:Int!, $classes:[Int]){
+        reserveRoom(major:$major roomNumber:$roomNumber classes:$classes){
+            ok
+            id
+            error
+        }
+    }
+`
+
 /*function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -31,6 +54,31 @@ const SDatePicker = styled(DatePicker)`
   }*/
 
 const ReserveMain = () => {
+    const history = useHistory();
+    const [startDate, setStartDate] = useState(null);
+    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+        mode:"onChange",
+    });
+    const {data} = useQuery(SEE_ROOM_MAJOR);
+    const label = data?.seeRoomMajor[0]?.major;
+    const onCompleted = (data) => {
+        const {reserveRoom:{ok,id,error}} = data;
+        if(!ok){
+            return setError("result",{
+                message:error,
+            });
+        }
+        history.push(`${routes.reservation}/user`,{message:"계정 생성 완료!", id});
+
+    }
+    const [reserveRoom,{loading}] = useMutation(RESERVE_ROOM,{
+        onCompleted
+    });
+    const onSubmitValid = (data) => {
+        const {roomNumber, schedule} = getValues();
+        console.log(roomNumber);
+        console.log(schedule);
+    }
     // 시작 시간
     const [startTime, setStartTime] = useState(null);
     // 종료 시간
@@ -47,6 +95,7 @@ const ReserveMain = () => {
 
     return (
         <>
+            <form>
             <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
             <FloatingLabel label='{data?.me?.major}' className="mt-3">
                 <Form.Select>
@@ -56,20 +105,7 @@ const ReserveMain = () => {
                     <option value="3">3번 스터디룸</option>
                 </Form.Select> 
             </FloatingLabel>
-
-            {/* <Subtitle size='17px' className="mt-4">사용할 날짜를 선택해주세요</Subtitle>
             
-            <div><SDatePicker
-                className="mt-2"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)} 
-                locale={ ko }
-                dateFormat="MM월 dd일"
-                minDate={new Date()}
-                maxDate={addDays(new Date(), 7)}
-                placeholderText="1주일 내에 선택"
-            /></div> */}
-
             <Subtitle size='17px' className="mt-5">사용할 시간을 지정해주세요</Subtitle>
             <Subtitle size='12px' className="mt-2">※ 9:30 - 5:30 사이 최대 2시간</Subtitle>
 
@@ -117,9 +153,9 @@ const ReserveMain = () => {
             }
             
             <Item h="40px"></Item>
-            <Link to={routes.reservation + "/user"}>
-                <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
-            </Link>
+            <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
+            
+          </form>
         </>
     );
 };
