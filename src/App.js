@@ -29,7 +29,7 @@ function App() {
             {!isLoggedIn ? (
               <Route path={routes.signUp} component={Signup} />
             ):null}
-            {!isLoggedIn?(
+            {isLoggedIn?(
             <>
             <Route path={routes.reservation} component={Reservation} />
             <Route path={routes.myPage + "/:studentId"} component={Mypage} />
