@@ -2,7 +2,7 @@ import { Subtitle, Submitbutton, CheckText } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
 import { useState } from "react";
-
+import { gql,useMutation,useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import routes from '../../routes';
 
@@ -10,6 +10,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/esm/locale';
 import { from } from '@apollo/client';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
 const SDatePicker = styled(DatePicker)`
     width: 130px;
@@ -21,6 +23,25 @@ const SDatePicker = styled(DatePicker)`
     color: #666666;
 `;
 
+const SEE_ROOM_MAJOR = gql`
+    query seeRoomMajor{
+        seeRoomMajor{
+            major
+            roomNumber
+        }
+    }
+`;
+
+const RESERVE_ROOM = gql`
+    mutation reserveRoom($major:Major! $roomNumber:Int!, $classes:[Int]){
+        reserveRoom(major:$major roomNumber:$roomNumber classes:$classes){
+            ok
+            id
+            error
+        }
+    }
+`
+
 function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -28,48 +49,73 @@ function addDays(date, days) {
   }
 
 const ReserveMain = () => {
+    const history = useHistory();
     const [startDate, setStartDate] = useState(null);
+    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+        mode:"onChange",
+    });
+    const {data} = useQuery(SEE_ROOM_MAJOR);
+    const label = data?.seeRoomMajor[0]?.major;
+    const onCompleted = (data) => {
+        const {reserveRoom:{ok,id,error}} = data;
+        if(!ok){
+            return setError("result",{
+                message:error,
+            });
+        }
+        history.push(`${routes.reservation}/user`,{message:"계정 생성 완료!", id});
+
+    }
+    const [reserveRoom,{loading}] = useMutation(RESERVE_ROOM,{
+        onCompleted
+    });
+    const onSubmitValid = (data) => {
+        const {roomNumber, schedule} = getValues();
+        console.log(roomNumber);
+        console.log(schedule);
+    }
 
     return (
         <>
-            <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
-            <FloatingLabel label='{data?.me?.major}' className="mt-2">
-                <Form.Select>
-                    <option>스터디룸을 선택해주세요</option>
-                    <option value="1">1번 스터디룸</option>
-                    <option value="2">2번 스터디룸</option>
-                    <option value="3">3번 스터디룸</option>
-                </Form.Select> 
-            </FloatingLabel>
+            <form onSubmit={handleSubmit(onSubmitValid)}>
+                <FloatingLabel label={label} className="mt-2">
+                <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
+                    <Form.Select ref={register()} name="roomNumber">
+                        <option>스터디룸을 선택해주세요</option>
+                        {data?.seeRoomMajor.map((room)=>(
+                            <option value={room.roomNumber}>{room.roomNumber}번 스터디룸</option>)
+                        )}
+                    </Form.Select> 
+                </FloatingLabel>
+                {/* <Subtitle size='17px' className="mt-4">사용할 날짜를 선택해주세요</Subtitle>
+                
 
-            {/* <Subtitle size='17px' className="mt-4">사용할 날짜를 선택해주세요</Subtitle>
-            
-            <div><SDatePicker
-                className="mt-2"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)} 
-                locale={ ko }
-                dateFormat="MM월 dd일"
-                minDate={new Date()}
-                maxDate={addDays(new Date(), 7)}
-                placeholderText="1주일 내에 선택"
-            /></div> */}
+                <div><SDatePicker
+                    className="mt-2"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)} 
+                    locale={ ko }
+                    dateFormat="MM월 dd일"
+                    minDate={new Date()}
+                    maxDate={addDays(new Date(), 7)}
+                    placeholderText="1주일 내에 선택"
+                /></div> */}
 
-            <Subtitle size='17px' className="mt-4">사용할 시간을 선택해주세요</Subtitle>
-            <CheckText className="mt-3">
-                <Form.Check label='1교시 9:30 ~ 10:30'/>
-                <Form.Check label='2교시 10:30 ~ 11:30'/>
-                <Form.Check label='3교시 11:30 ~ 12:30'/>
-                <Form.Check label='4교시 12:30 ~ 13:30'/>
-                <Form.Check label='5교시 13:30 ~ 14:30'/>
-                <Form.Check label='6교시 14:30 ~ 15:30'/>
-                <Form.Check label='7교시 15:30 ~ 16:30'/>
-                <Form.Check label='8교시 16:30 ~ 17:30'/>
-            </CheckText>
+                <Subtitle size='17px' className="mt-4">사용할 시간을 선택해주세요</Subtitle>
+                <CheckText className="mt-3" ref={register()} name="schedule">
+                    <Form.Check value={20} label='Time: 09:30 ~ 10:00'/>
+                    <Form.Check value={21} label='Time: 10:00 ~ 10:30'/>
+                    <Form.Check value={22} label='Time: 10:30 ~ 11:00'/>
+                    <Form.Check value={23} label='Time: 11:00 ~ 11:30'/>
+                    <Form.Check value={24} label='Time: 11:30 ~ 12:00'/>
+                    <Form.Check value={25} label='Time: 12:00 ~ 12:30'/>
+                    <Form.Check value={26} label='Time: 12:30 ~ 13:00'/>
+                    <Form.Check value={27} label='Time: 13:00 ~ 13:30'/>
+                </CheckText>
 
-            <Link to={routes.reservation + "/user"}>
                 <Submitbutton type="submit" value="다음" height="50px"></Submitbutton>
-            </Link>
+                
+            </form>
         </>
     );
 };
