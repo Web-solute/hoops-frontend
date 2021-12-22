@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const Item = styled.div`
     width: 300px;
     width: ${ props => props.w };
+    height: ${ props => props.h };
 `;
 
 export const Flex = styled.div`
@@ -59,7 +60,7 @@ export const Submitbutton = styled.input`
 
     margin-left: ${ props => props.ml };
     height: ${ props => props.height };
-    margin-top: ${ props => props.mt };
+    margin: ${ props => props.m };
 `;
 
 export const Subtitle = styled.span`
@@ -81,10 +82,4 @@ export const Absolute = styled.div`
     right: ${ props => props.right };
     top: ${ props => props.top };
     bottom: ${ props => props.bottom };
-`;
-
-export const CheckText = styled.div`
-    font-family: sans-serif; 
-    font-size: 14px;
-    color: #666666;
 `;

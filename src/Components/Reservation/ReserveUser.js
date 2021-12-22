@@ -11,7 +11,8 @@ const ReserveUser = () => {
                 />
             </InputGroup></Item>
 
-            <Submitbutton type="submit" value="예약 확인" height="50px"></Submitbutton>
+            <Item h="45px"></Item>
+            <Submitbutton type="submit" value="예약 확인" height="50px" m="0px"></Submitbutton>
         </>
     );
 };
