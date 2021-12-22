@@ -1,4 +1,4 @@
-import { Subtitle, Submitbutton, Item } from '../shared';
+import { Subtitle, Submitbutton, Item, Container } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
 import { useState } from "react";
@@ -96,6 +96,8 @@ const ReserveMain = () => {
     return (
         <>
             <form>
+            <Container p='0px'>
+
             <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
             <FloatingLabel label='{data?.me?.major}' className="mt-3">
                 <Form.Select>
@@ -105,9 +107,22 @@ const ReserveMain = () => {
                     <option value="3">3번 스터디룸</option>
                 </Form.Select> 
             </FloatingLabel>
+
+            {/* <Subtitle size='17px' className="mt-4">사용할 날짜를 선택해주세요</Subtitle>
+            
+            <div><SDatePicker
+                className="mt-2"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)} 
+                locale={ ko }
+                dateFormat="MM월 dd일"
+                minDate={new Date()}
+                maxDate={addDays(new Date(), 7)}
+                placeholderText="1주일 내에 선택"
+            /></div> */}
             
             <Subtitle size='17px' className="mt-5">사용할 시간을 지정해주세요</Subtitle>
-            <Subtitle size='12px' className="mt-2">※ 9:30 - 5:30 사이 최대 2시간</Subtitle>
+            <Subtitle size='12px' className="mt-2">※ 최대 연속 2시간</Subtitle>
 
 
             <div><SDatePicker
@@ -153,8 +168,11 @@ const ReserveMain = () => {
             }
             
             <Item h="40px"></Item>
-            <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
-            
+            <Link to={routes.reservation + "/user"}>
+                <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
+            </Link>
+
+            </Container>
           </form>
         </>
     );
