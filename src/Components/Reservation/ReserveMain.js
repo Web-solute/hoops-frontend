@@ -5,6 +5,7 @@ import { useState } from "react";
 import { gql,useMutation,useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import routes from '../../routes';
+import NoticeModal from '../Modal/NoticeModal';
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -55,7 +56,7 @@ const RESERVE_ROOM = gql`
 
 const ReserveMain = () => {
     const history = useHistory();
-    const [startDate, setStartDate] = useState(null);
+
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
@@ -79,6 +80,9 @@ const ReserveMain = () => {
         console.log(roomNumber);
         console.log(schedule);
     }
+    
+    //const [startDate, setStartDate] = useState(null);
+
     // 시작 시간
     const [startTime, setStartTime] = useState(null);
     // 종료 시간
@@ -93,8 +97,12 @@ const ReserveMain = () => {
         setEndTime(null);
     };
 
+    // 공지사항
+    const [notice, setNotice] = useState(true);
+
     return (
         <>
+            { notice === true ? <NoticeModal setNotice={setNotice} /> : null } 
             <form>
             <Container p='0px'>
 
