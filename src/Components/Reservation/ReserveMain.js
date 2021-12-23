@@ -1,8 +1,8 @@
 import { Subtitle, Submitbutton, Item, Container } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
-import { useState } from "react";
-import { gql,useMutation,useQuery } from "@apollo/client";
+import { useState, useEffect } from "react";
+import { gql,useMutation,useQuery, useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import routes from '../../routes';
 
@@ -37,15 +37,24 @@ const SEE_ROOM_MAJOR = gql`
     }
 `;
 
+const DISABLED_ROOM = gql`
+    query disableRoom($roomId:Int!){
+        disableRoom(roomId:$roomId){
+            start
+            finish
+        }
+    }
+`;
+
 const RESERVE_ROOM = gql`
-    mutation reserveRoom($major:Major! $roomNumber:Int!, $start:String!, $finish:String!){
-        reserveRoom(major:$major roomNumber:$roomNumber start:$start finish:$finish){
+    mutation reserveRoom($id:Int!, $start:String!, $finish:String!){
+        reserveRoom(id:$id start:$start finish:$finish){
             ok
             id
             error
         }
     }
-`
+`;
 
 /*function addDays(date, days) {
     var result = new Date(date);
@@ -55,7 +64,6 @@ const RESERVE_ROOM = gql`
 
 const ReserveMain = () => {
     const history = useHistory();
-    const [startDate, setStartDate] = useState(null);
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
@@ -73,6 +81,13 @@ const ReserveMain = () => {
      };
     const {data} = useQuery(SEE_ROOM_MAJOR);
     const label = data?.seeRoomMajor[0]?.major;
+    const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM);
+    const roomSelect = (data) => {
+        disableRoom({variables:{roomId:Number(data.target.value)}})
+    }
+    console.log(disables);
+    //start & finish 값들 받아서 excludesTime에 넣으면 댐!
+    
     const onCompleted = (data) => {
         const {reserveRoom:{ok,id,error}} = data;
         if(!ok){
@@ -97,11 +112,9 @@ const ReserveMain = () => {
         if(loading){
             return;
         }
-        console.log(Number(roomNumber));
         reserveRoom({
             variables:{
-                major:label,
-                roomNumber:Number(roomNumber),
+                id:Number(roomNumber),
                 start,
                 finish:end
             }
@@ -114,10 +127,10 @@ const ReserveMain = () => {
                 <Container p='0px'>
                     <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
                     <FloatingLabel label={label} className="mt-3">
-                        <Form.Select ref={register()} name="roomNumber">
+                        <Form.Select ref={register()} name="roomNumber" onChange={roomSelect}>
                             <option>스터디룸을 선택해주세요</option>
                             {data?.seeRoomMajor.map((room)=>(
-                                <option key={room.id} value={room.roomNumber}>{room.roomNumber}번 스터디룸</option>)
+                                <option key={room.id}  value={room.id} >{room.roomNumber}번 스터디룸</option>)
                             )}
                         </Form.Select> 
                     </FloatingLabel>
