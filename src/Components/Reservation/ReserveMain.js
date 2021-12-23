@@ -60,18 +60,6 @@ const ReserveMain = () => {
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
-     // 시작 시간
-     const [startTime, setStartTime] = useState(null);
-     // 종료 시간
-     const [endTime, setEndTime] = useState(null);
-     // 시작 시간을 선택했는지
-     const [isSelected, setIsSelected] = useState(false);
-     // 시작 시간이 선택되면 해당 시간 적용 및 isSelected를 true로
-     const onSelect = (time) => {
-        setStartTime(time);
-        setIsSelected(true);
-        setEndTime(null);
-     };
     const {data} = useQuery(SEE_ROOM_MAJOR);
     const label = data?.seeRoomMajor[0]?.major;
     const onCompleted = (data) => {
@@ -203,7 +191,9 @@ const ReserveMain = () => {
                     :null}
             
                     <Item h="40px"></Item>
-                    <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
+                    <Link to={routes.reservation + "/user"}>
+                        <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
+                    </Link>
                 </Container>
             </form>
         </>
