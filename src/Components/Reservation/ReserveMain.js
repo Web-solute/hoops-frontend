@@ -5,6 +5,7 @@ import { useState } from "react";
 import { gql,useMutation,useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import routes from '../../routes';
+import NoticeModal from '../Modal/NoticeModal';
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -55,7 +56,7 @@ const RESERVE_ROOM = gql`
 
 const ReserveMain = () => {
     const history = useHistory();
-    const [startDate, setStartDate] = useState(null);
+
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
@@ -107,11 +108,33 @@ const ReserveMain = () => {
             }
         });
     }
+    
+    //const [startDate, setStartDate] = useState(null);
+
+    // 시작 시간
+    const [startTime, setStartTime] = useState(null);
+    // 종료 시간
+    const [endTime, setEndTime] = useState(null);
+    // 시작 시간을 선택했는지
+    const [isSelected, setIsSelected] = useState(false);
+
+    // 시작 시간이 선택되면 해당 시간 적용 및 isSelected를 true로
+    const onSelect = (time) => {
+        setStartTime(time);
+        setIsSelected(true);
+        setEndTime(null);
+    };
+
+
+    // 공지사항
+    const [notice, setNotice] = useState(true);
 
     return (
         <>
+            { notice === true ? <NoticeModal setNotice={setNotice} /> : null } 
             <form onSubmit={handleSubmit(onSubmitValid)}>
                 <Container p='0px'>
+                            
                     <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
                     <FloatingLabel label={label} className="mt-3">
                         <Form.Select ref={register()} name="roomNumber">
