@@ -67,9 +67,9 @@ const ReserveMain = () => {
      const [isSelected, setIsSelected] = useState(false);
      // 시작 시간이 선택되면 해당 시간 적용 및 isSelected를 true로
      const onSelect = (time) => {
-         setStartTime(time);
-         setIsSelected(true);
-         setEndTime(null);
+        setStartTime(time);
+        setIsSelected(true);
+        setEndTime(null);
      };
     const {data} = useQuery(SEE_ROOM_MAJOR);
     const label = data?.seeRoomMajor[0]?.major;
@@ -145,8 +145,6 @@ const ReserveMain = () => {
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={30}
-                            minTime={setHours(setMinutes(new Date(), 30), 9)}
-                            maxTime={setHours(setMinutes(new Date(), 0), 17)}
                             timeCaption="Time"
                             dateFormat="aa h:mm 시작"
                             placeholderText="시작 시간"
