@@ -2,7 +2,7 @@ import { isLoggedInVar, logUserOut } from "../apollo";
 import { useParams } from "react-router-dom";
 import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Subtitle, Smalltext, Container } from "../Components/shared";
 import cancel_button from '../images/cancel_button.png';
 import logout_button from '../images/logout_button.png';
@@ -10,6 +10,7 @@ import back_button from '../images/back_button.png';
 import manager_button from '../images/manager_button.png';
 import { useHistory, Link } from "react-router-dom";
 import routes from "../routes";
+import MypageModal from "../Components/Modal/MypageModal";
 
 const ReservationBox = styled.div`
     display: flex;
@@ -48,6 +49,10 @@ const ME_QUERY = gql`
 
 function Mypage() {
     const history = useHistory();
+
+    const [logoutModal, setLogoutModal] = useState(false);
+    const [cancelModal, setCancelModal] = useState(false);
+
     const hasToken = useReactiveVar(isLoggedInVar);
     const {studentId} = useParams();
     const {data} = useQuery(ME_QUERY,{
@@ -62,10 +67,16 @@ function Mypage() {
         }
         
     },[data]);
+
     const logOut = () => {
         history.push(routes.home,{message:"로그아웃되셨습니다!"});
         logUserOut();
-    }
+    } 
+
+    const cancelReservation = () => {
+        history.push(routes.home,{message:"예약취소되었습니다!"});
+    } 
+
     return (
         <Container>
             <button onClick={()=>{ history.goBack(); }} style={{ border: 0, background: 'none', marginRight: '300px' }}><img src={back_button} alt='back_button'/></button>
@@ -77,10 +88,10 @@ function Mypage() {
                 <NoReservationText>예약 내역이 없습니다!</NoReservationText>
             </ReservationBox>
             <Buttoncontainer>
-                <Link to={routes.home}>
+                <button onClick={()=> setCancelModal(true) } style={{ border: 0, background: 'none' }}>
                     <img src={cancel_button} alt='cancel_button'/>
-                </Link>
-                <button onClick={()=>logOut()} style={{ border: 0, background: 'none', marginLeft: '15px' }}>
+                </button>
+                <button onClick={()=> setLogoutModal(true) } style={{ border: 0, background: 'none' }}>
                     <img src={logout_button} alt='logout_button'/>
                 </button>
             </Buttoncontainer>
@@ -88,6 +99,25 @@ function Mypage() {
                 (<Link to={routes.manager}>
                 <img src={manager_button} alt='manager_button' style={{ marginTop: '20px' }}/>
             </Link>):null}
+
+            { logoutModal === true ? 
+                <MypageModal 
+                    setModal={setLogoutModal} 
+                    setText={'로그아웃'} 
+                    setAction = {logOut}
+                /> 
+                : null 
+            } 
+            
+            { cancelModal === true ? 
+                <MypageModal 
+                    setModal={setCancelModal} 
+                    setText={'예약취소'} 
+                    setAction = {cancelReservation}
+                /> 
+                : null 
+            } 
+
         </Container>
     );
 }
