@@ -75,6 +75,18 @@ const ReserveMain = () => {
         disableRoom({variables:{roomId:Number(data.target.value)}})
     }
     console.log(disables);
+    let startObj = [];
+    let finishObj = [];
+    disables?.disableRoom.map((schedule)=>{
+        console.log(schedule.start);
+        const startArr = schedule.start.split(":");
+        const finishArr = schedule.finish.split(":");
+        const startD = setHours(setMinutes(new Date(), Number(startArr[1])),Number(startArr[0]));
+        const finishD = setHours(setMinutes(new Date(), Number(finishArr[1])),Number(finishArr[0]));
+        startObj.push(startD);
+        finishObj.push(finishD);
+    });
+    console.log(startObj);
     //start & finish 값들 받아서 excludesTime에 넣으면 댐!
     
     const onCompleted = (data) => {
@@ -109,8 +121,6 @@ const ReserveMain = () => {
             }
         });
     }
-    
-    //const [startDate, setStartDate] = useState(null);
 
     // 시작 시간
     const [startTime, setStartTime] = useState(null);
@@ -169,6 +179,7 @@ const ReserveMain = () => {
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={30}
+                            excludeTimes={startObj}
                             timeCaption="Time"
                             dateFormat="aa h:mm 시작"
                             placeholderText="시작 시간"
@@ -190,6 +201,7 @@ const ReserveMain = () => {
                                 excludeTimes={[
                                     // 시작 시간 제외
                                     startTime,
+                                    ...finishObj,
                                     // 5:00 선택 기준 최대 7:00까지 예외처리
                                     setHours(setMinutes(new Date(), 0), 18),
                                     setHours(setMinutes(new Date(), 30), 18),
