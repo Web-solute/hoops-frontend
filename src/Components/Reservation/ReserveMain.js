@@ -1,9 +1,8 @@
 import { Subtitle, Submitbutton, Item, Container } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { gql,useMutation,useQuery, useLazyQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 import routes from '../../routes';
 import NoticeModal from '../Modal/NoticeModal';
 
@@ -198,9 +197,9 @@ const ReserveMain = () => {
                                     startTime,
                                     ...finishObj,
                                     // 5:00 선택 기준 최대 7:00까지 예외처리
-                                    setHours(setMinutes(new Date(), 0), 18),
-                                    setHours(setMinutes(new Date(), 30), 18),
-                                    setHours(setMinutes(new Date(), 0), 19)
+                                    //setHours(setMinutes(new Date(), 0), 18),
+                                    //setHours(setMinutes(new Date(), 30), 18),
+                                    //setHours(setMinutes(new Date(), 0), 19)
                                 ]}
                                 timeCaption="Time"
                                 dateFormat="aa h:mm 종료"
