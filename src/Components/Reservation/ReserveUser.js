@@ -1,8 +1,11 @@
-import { Subtitle, Item, Submitbutton, Container } from '../shared';
+import { Subtitle, Item, Submitbutton, Container, Input } from '../shared';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
+import { useState } from "react";
+
+import userData from './UserData';
 
 const ADD_MEMBER_MUTATION = gql`
     mutation addMember($reservationId:Int! $group: [String]){
@@ -22,6 +25,32 @@ const SEARCH_USERS_QUERY = gql`
     }
 `;
 
+const SearchUser = (props) => {
+
+    return (
+        <>
+        <Input 
+            className="mt-3"
+            width='225px'
+            list="list"
+            type="text"
+            placeholder="사용자 이름으로 추가"
+            onChange={(e) => {
+                props.setSearchTerm(e.target.value);
+            }} 
+        />
+        <Item w='230px'><datalist id ="list">
+            {userData.filter((val) => {
+                if(props.searchTerm == ""){
+                    return val
+                }else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
+                    return val
+                }
+            }).map((data) => ( <option value={data.name} />))}
+        </datalist ></Item>       
+        </>
+    );
+};
 
 const ReserveUser = () => {
     const location = useLocation();
@@ -47,18 +76,24 @@ const ReserveUser = () => {
             }
         })
     };
+
+    const [searchTerm1, setSearchTerm1] = useState("");
+    const [searchTerm2, setSearchTerm2] = useState("");
+    const [searchTerm3, setSearchTerm3] = useState("");
+
     return (
         <>
+            <Subtitle size='17px' className="mt-4">사용자를 추가해주세요</Subtitle>
+            <Subtitle size='12px' className="mt-2">※ 최대 3명</Subtitle>
+
             <form>
             <Container p='0px'>
-                <Item w='240px'><InputGroup className="mt-4">
-                    <InputGroup.Text><Subtitle>@</Subtitle></InputGroup.Text>
-                    <FormControl
-                    placeholder="사용자 추가 (최대 3인)"
-                    />
-                </InputGroup></Item>
 
-                <Item h="45px"></Item>
+                <SearchUser searchTerm={searchTerm1} setSearchTerm={setSearchTerm1}/>
+                <SearchUser searchTerm={searchTerm2} setSearchTerm={setSearchTerm2}/>
+                <SearchUser searchTerm={searchTerm3} setSearchTerm={setSearchTerm3}/>
+
+                <Item h="40px"></Item>
                 <Submitbutton type="submit" value="예약 확인" height="50px" m="0px"></Submitbutton>
             </Container>
             </form>
