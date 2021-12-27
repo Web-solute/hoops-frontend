@@ -1,7 +1,10 @@
 import { Subtitle, Item, Submitbutton, Container } from '../shared';
 import { InputGroup, FormControl } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 const ReserveUser = () => {
+    const location = useLocation();
+    console.log(location?.state?.id);
     return (
         <>
             <form>
