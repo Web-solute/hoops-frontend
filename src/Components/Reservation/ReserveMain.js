@@ -70,58 +70,6 @@ const ReserveMain = () => {
     });
     const {data} = useQuery(SEE_ROOM_MAJOR);
     const label = data?.seeRoomMajor[0]?.major;
-    const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM);
-    const roomSelect = (data) => {
-        disableRoom({variables:{roomId:Number(data.target.value)}})
-    }
-    console.log(disables);
-    let startObj = [];
-    let finishObj = [];
-    disables?.disableRoom.map((schedule)=>{
-        console.log(schedule.start);
-        const startArr = schedule.start.split(":");
-        const finishArr = schedule.finish.split(":");
-        const startD = setHours(setMinutes(new Date(), Number(startArr[1])),Number(startArr[0]));
-        const finishD = setHours(setMinutes(new Date(), Number(finishArr[1])),Number(finishArr[0]));
-        startObj.push(startD);
-        finishObj.push(finishD);
-    });
-    console.log(startObj);
-    //start & finish 값들 받아서 excludesTime에 넣으면 댐!
-    
-    const onCompleted = (data) => {
-        const {reserveRoom:{ok,id,error}} = data;
-        if(!ok){
-            return setError("result",{
-                message:error,
-            });
-        }
-        history.push(`${routes.reservation}/user`,{message:"계정 생성 완료!", id});
-
-    }
-    const [reserveRoom,{loading}] = useMutation(RESERVE_ROOM,{
-        onCompleted
-    });
-    const onSubmitValid = (data) => {
-        const {roomNumber} = getValues();
-        const startH = (Number(startTime.getHours()) > 9 ? `${startTime.getHours()}` : `0${startTime.getHours()}` );
-        const startM = (Number(startTime.getMinutes()) > 9 ? `${startTime.getMinutes()}` : `0${startTime.getMinutes()}` );
-        const start = `${startH}:${startM}`;
-        const endH = (Number(endTime.getHours()) > 9 ? `${endTime.getHours()}` : `0${endTime.getHours()}` );
-        const endM = (Number(endTime.getMinutes()) > 9 ? `${endTime.getMinutes()}` : `0${endTime.getMinutes()}` );
-        const end = `${endH}:${endM}`;
-        if(loading){
-            return;
-        }
-        reserveRoom({
-            variables:{
-                id:Number(roomNumber),
-                start,
-                finish:end
-            }
-        });
-    }
-
     // 시작 시간
     const [startTime, setStartTime] = useState(null);
     // 종료 시간
@@ -135,6 +83,53 @@ const ReserveMain = () => {
         setIsSelected(true);
         setEndTime(null);
     };
+    const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM);
+    const roomSelect = (data) => {
+        disableRoom({variables:{roomId:Number(data.target.value)}})
+    }
+    
+    let startObj = [];
+    let finishObj = [];
+    disables?.disableRoom.map((schedule)=>{
+        const startArr = schedule.start.split(":");
+        const finishArr = schedule.finish.split(":");
+        const startD = setHours(setMinutes(new Date(), Number(startArr[1])),Number(startArr[0]));
+        const finishD = setHours(setMinutes(new Date(), Number(finishArr[1])),Number(finishArr[0]));
+        startObj.push(startD);
+        finishObj.push(finishD);
+    });
+    
+    const onCompleted = (data) => {
+        const {reserveRoom:{ok,id,error}} = data;
+        if(!ok){
+            return setError("result",{
+                message:error,
+            });
+        }
+        history.push(`${routes.reservation}/user`,{message:"예약 확인!", id});
+    }
+    const [reserveRoom,{loading}] = useMutation(RESERVE_ROOM,{
+        onCompleted
+    });
+    const onSubmitValid = (data) => {
+        const {roomNumber} = getValues();
+        const startH = (Number(startTime?.getHours()) > 9 ? `${startTime?.getHours()}` : `0${startTime?.getHours()}` );
+        const startM = (Number(startTime?.getMinutes()) > 9 ? `${startTime?.getMinutes()}` : `0${startTime?.getMinutes()}` );
+        const start = `${startH}:${startM}`;
+        const endH = (Number(endTime?.getHours()) > 9 ? `${endTime?.getHours()}` : `0${endTime?.getHours()}` );
+        const endM = (Number(endTime?.getMinutes()) > 9 ? `${endTime?.getMinutes()}` : `0${endTime?.getMinutes()}` );
+        const end = `${endH}:${endM}`;
+        if(loading){
+            return;
+        }
+        reserveRoom({
+            variables:{
+                id:Number(roomNumber),
+                start,
+                finish:end
+            }
+        });
+    }
 
 
     // 공지사항
@@ -216,9 +211,8 @@ const ReserveMain = () => {
                     :null}
             
                     <Item h="40px"></Item>
-                    <Link to={routes.reservation + "/user"}>
-                        <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
-                    </Link>
+                    <Submitbutton type="submit" value="다음" height="50px" m="0px"/>
+                    
                 </Container>
             </form>
         </>

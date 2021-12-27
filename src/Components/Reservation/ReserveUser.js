@@ -1,7 +1,52 @@
 import { Subtitle, Item, Submitbutton, Container } from '../shared';
 import { InputGroup, FormControl } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
+
+const ADD_MEMBER_MUTATION = gql`
+    mutation addMember($reservationId:Int! $group: [String]){
+        addMember(reservationId:$reservationId group:$group){
+            ok
+            error
+        }
+    }
+`;
+const SEARCH_USERS_QUERY = gql`
+    query searchUsers($keyword:String!){
+        searchUsers(keyword:$keyword){
+            id
+            studentId
+            name
+        }
+    }
+`;
+
 
 const ReserveUser = () => {
+    const location = useLocation();
+    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+        mode:"onChange",
+    });
+    const onCompleted = (data) => {
+        const {addMember:{ok,error}} = data;
+        if(!ok){
+            return setError("result",{
+                message:error,
+            });
+        }
+    };
+    const [addMember,{loading}] = useMutation(ADD_MEMBER_MUTATION,{
+        onCompleted
+    });
+    const onSubmitValid = (data) => {
+        addMember({
+            variables:{
+                reservationId:location?.state?.id,
+                group:[]
+            }
+        })
+    };
     return (
         <>
             <form>
