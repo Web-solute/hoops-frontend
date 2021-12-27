@@ -106,21 +106,18 @@ const ReserveMain = () => {
                 message:error,
             });
         }
-        console.log(id);
         history.push(`${routes.reservation}/user`,{message:"예약 확인!", id});
-
     }
     const [reserveRoom,{loading}] = useMutation(RESERVE_ROOM,{
         onCompleted
     });
     const onSubmitValid = (data) => {
         const {roomNumber} = getValues();
-        const startH = (Number(startTime.getHours()) > 9 ? `${startTime.getHours()}` : `0${startTime.getHours()}` );
-        const startM = (Number(startTime.getMinutes()) > 9 ? `${startTime.getMinutes()}` : `0${startTime.getMinutes()}` );
+        const startH = (Number(startTime?.getHours()) > 9 ? `${startTime?.getHours()}` : `0${startTime?.getHours()}` );
+        const startM = (Number(startTime?.getMinutes()) > 9 ? `${startTime?.getMinutes()}` : `0${startTime?.getMinutes()}` );
         const start = `${startH}:${startM}`;
-        console.log(start);
-        const endH = (Number(endTime.getHours()) > 9 ? `${endTime.getHours()}` : `0${endTime.getHours()}` );
-        const endM = (Number(endTime.getMinutes()) > 9 ? `${endTime.getMinutes()}` : `0${endTime.getMinutes()}` );
+        const endH = (Number(endTime?.getHours()) > 9 ? `${endTime?.getHours()}` : `0${endTime?.getHours()}` );
+        const endM = (Number(endTime?.getMinutes()) > 9 ? `${endTime?.getMinutes()}` : `0${endTime?.getMinutes()}` );
         const end = `${endH}:${endM}`;
         if(loading){
             return;
@@ -214,7 +211,7 @@ const ReserveMain = () => {
                     :null}
             
                     <Item h="40px"></Item>
-                    <Submitbutton type="submit" value="다음" height="50px" m="0px"></Submitbutton>
+                    <Submitbutton type="submit" value="다음" height="50px" m="0px"/>
                     
                 </Container>
             </form>
