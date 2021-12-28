@@ -40,7 +40,6 @@ const QRmodal = (props) => {
         valueString = `${res.id} ${res.room.major} ${res.room.roomNumber} ${res.schedule[0].year}-${res.schedule[0].month}-${res.schedule[0].date} ${res.schedule[0].start} ${res.schedule[res.schedule.length-1].year}-${res.schedule[res.schedule.length-1].month}-${res.schedule[res.schedule.length-1].date} ${res.schedule[res.schedule.length-1].finish}`;
         valueObj.push(valueString);
     });
-    console.log(valueObj);
     return (
         <Background>
             <Window>
