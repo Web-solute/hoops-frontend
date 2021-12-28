@@ -1,11 +1,14 @@
 import { Subtitle, Item, Submitbutton, Container, Input } from '../shared';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
 
 import userData from './UserData';
+import { client } from '../../apollo';
+import { useHistory } from 'react-router-dom';
+import routes from '../../routes';
 
 const ADD_MEMBER_MUTATION = gql`
     mutation addMember($reservationId:Int! $group: [String]){
@@ -26,37 +29,44 @@ const SEARCH_USERS_QUERY = gql`
 `;
 
 const SearchUser = (props) => {
-
+    const [searchUsers,{data}] = useLazyQuery(SEARCH_USERS_QUERY);
+    console.log(data);
     return (
         <>
         <Input 
             className="mt-3"
             width='225px'
-            list="list"
+            list={props.name}
             type="text"
             placeholder="사용자 이름으로 추가"
             onChange={(e) => {
                 props.setSearchTerm(e.target.value);
+                searchUsers({variables:{keyword:e.target.value}});
             }} 
         />
-        <Item w='230px'><datalist id ="list">
-            {userData.filter((val) => {
+        <Item w='230px'><datalist id ={props.name}>
+            {data?.searchUsers?.filter((val) => {
                 if(props.searchTerm == ""){
                     return val
                 }else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
                     return val
                 }
-            }).map((data) => ( <option value={data.name} />))}
+            }).map((data, index) => ( <option key={index} value={data.name} />))}
         </datalist ></Item>       
         </>
     );
 };
 
+
 const ReserveUser = () => {
     const location = useLocation();
+    const history = useHistory();
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
+    const [searchTerm1, setSearchTerm1] = useState("");
+    const [searchTerm2, setSearchTerm2] = useState("");
+    const [searchTerm3, setSearchTerm3] = useState("");
     const onCompleted = (data) => {
         const {addMember:{ok,error}} = data;
         if(!ok){
@@ -69,30 +79,36 @@ const ReserveUser = () => {
         onCompleted
     });
     const onSubmitValid = (data) => {
+        let group = [];
+        if(searchTerm1){
+            group.push(searchTerm1);
+        }
+        if(searchTerm2){
+            group.push(searchTerm2);
+        }
+        if(searchTerm3){
+            group.push(searchTerm3);
+        }
+        console.log(group)
         addMember({
             variables:{
                 reservationId:location?.state?.id,
-                group:[]
+                group:group
             }
-        })
+        });
+        history.push(routes.home);
     };
-
-    const [searchTerm1, setSearchTerm1] = useState("");
-    const [searchTerm2, setSearchTerm2] = useState("");
-    const [searchTerm3, setSearchTerm3] = useState("");
 
     return (
         <>
             <Subtitle size='17px' className="mt-4">사용자를 추가해주세요</Subtitle>
             <Subtitle size='12px' className="mt-2">※ 최대 3명</Subtitle>
 
-            <form>
+            <form onSubmit={handleSubmit(onSubmitValid)}>
             <Container p='0px'>
-
-                <SearchUser searchTerm={searchTerm1} setSearchTerm={setSearchTerm1}/>
-                <SearchUser searchTerm={searchTerm2} setSearchTerm={setSearchTerm2}/>
-                <SearchUser searchTerm={searchTerm3} setSearchTerm={setSearchTerm3}/>
-
+                <SearchUser name="User1" searchTerm={searchTerm1} setSearchTerm={setSearchTerm1}/>
+                <SearchUser name="User2" searchTerm={searchTerm2} setSearchTerm={setSearchTerm2}/>
+                <SearchUser name="User3" searchTerm={searchTerm3} setSearchTerm={setSearchTerm3}/>
                 <Item h="40px"></Item>
                 <Submitbutton type="submit" value="예약 확인" height="50px" m="0px"></Submitbutton>
             </Container>
