@@ -30,7 +30,6 @@ const SEARCH_USERS_QUERY = gql`
 
 const SearchUser = (props) => {
     const [searchUsers,{data}] = useLazyQuery(SEARCH_USERS_QUERY);
-    console.log(data);
     return (
         <>
         <Input 
@@ -51,7 +50,7 @@ const SearchUser = (props) => {
                 }else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
                     return val
                 }
-            }).map((data, index) => ( <option key={index} value={data.name} />))}
+            }).map((data, index) => ( <option key={index} value={`${data.name} ${data.studentId}`} />))}
         </datalist ></Item>       
         </>
     );
@@ -81,15 +80,17 @@ const ReserveUser = () => {
     const onSubmitValid = (data) => {
         let group = [];
         if(searchTerm1){
-            group.push(searchTerm1);
+            const studentId = searchTerm1.split(" ");
+            group.push(studentId[1]);
         }
         if(searchTerm2){
-            group.push(searchTerm2);
+            const studentId = searchTerm2.split(" ");
+            group.push(studentId[1]);
         }
         if(searchTerm3){
-            group.push(searchTerm3);
+            const studentId = searchTerm3.split(" ");
+            group.push(studentId[1]);
         }
-        console.log(group)
         addMember({
             variables:{
                 reservationId:location?.state?.id,
