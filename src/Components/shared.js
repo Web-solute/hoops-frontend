@@ -12,6 +12,7 @@ export const Item = styled.div`
     width: 300px;
     width: ${ props => props.w };
     height: ${ props => props.h };
+    padding: ${ props => props.p };
 `;
 
 export const Flex = styled.div`
