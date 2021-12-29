@@ -130,6 +130,14 @@ const ReserveMain = () => {
         });
     }
 
+    // 현재 시간 기준 지나간 시간 선택 불가
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+    
+        return currentDate.getTime() < selectedDate.getTime();
+    };
+    
 
     // 공지사항
     const [notice, setNotice] = useState(true);
@@ -170,9 +178,12 @@ const ReserveMain = () => {
                             selected={startTime}
                             onChange={onSelect}
                             locale={ ko }
+                            filterTime={filterPassedTime}
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={30}
+                            minTime={setHours(setMinutes(new Date(), 30), 9)}
+                            maxTime={setHours(setMinutes(new Date(), 30), 21)}
                             excludeTimes={startObj}
                             timeCaption="Time"
                             dateFormat="aa h:mm 시작"
