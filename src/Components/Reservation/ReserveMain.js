@@ -153,7 +153,6 @@ const ReserveMain = () => {
                 return maxTime;
             }else{
                 const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime)+1);
-                console.log(maxTime);
                 return maxTime;
             }
 
@@ -201,7 +200,8 @@ const ReserveMain = () => {
                     /></div> */}
             
                     <Subtitle size='17px' className="mt-5">사용할 시간을 지정해주세요</Subtitle>
-                    <Subtitle size='12px' className="mt-2">※ 최대 연속 2시간</Subtitle>
+                    <Subtitle size='12px' className="mt-2">※ 최대 연속 2시간 사용 가능합니다</Subtitle>
+                    <Subtitle size='10px' className="mt-2">최대 시작 시간 23:00, 최대 종료 시간 23:30</Subtitle>
                     <div>
                         <SDatePicker
                             selected={startTime}
@@ -211,8 +211,8 @@ const ReserveMain = () => {
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={30}
-                            // minTime={setHours(setMinutes(new Date(), 30), 9)}
-                            // maxTime={setHours(setMinutes(new Date(), 30), 21)}
+                            minTime={setHours(setMinutes(new Date(), 0), 0)}
+                            maxTime={setHours(setMinutes(new Date(), 0), 23)}
                             excludeTimes={startObj}
                             timeCaption="Time"
                             dateFormat="aa h:mm 시작"
@@ -251,7 +251,7 @@ const ReserveMain = () => {
             
                     <Item h="40px"></Item>
                     <Submitbutton type="submit" value="다음" height="50px" m="0px"/>
-                    {/* {errors?.result?.message} */}
+                    {errors?.result?.message}
                     
                 </Container>
             </form>

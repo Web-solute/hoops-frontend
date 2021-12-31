@@ -11,6 +11,7 @@ import routes from "../routes";
 const Notice = styled.div`
     font-size: 14px;
     color: #858585;
+    color: ${props => props.color};
     margin-top: ${props => props.top};
     margin-bottom: ${props => props.bottom};
 `;
@@ -95,7 +96,7 @@ function Signup() {
     return (
         <Container>
             <Subtitle top="35px" size="22px">회원가입</Subtitle>
-            <Notice top="15px">24시간 이내에 승인 처리 될 예정입니다.</Notice>
+            <Notice top="15px" color="tomato">※ 24시간 이내에 승인 처리 될 예정입니다</Notice>
             <form onSubmit={handleSubmit(onSubmitValid)} encType={'multipart/form-data'}>
                 <Flex>
                 <Input
