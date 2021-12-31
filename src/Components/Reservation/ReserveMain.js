@@ -141,8 +141,6 @@ const ReserveMain = () => {
     const maxTimeFilter = () => {
         const maxHour = getHours(startTime);
         const maxMinute = getMinutes(startTime);
-        console.log(maxHour);
-        console.log(maxMinute);
         if(maxHour <= 21){
             const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2);
             return maxTime;
