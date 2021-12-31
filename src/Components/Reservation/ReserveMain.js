@@ -146,8 +146,7 @@ const ReserveMain = () => {
         <>
             { notice === true ? <NoticeModal setNotice={setNotice} /> : null } 
             <form onSubmit={handleSubmit(onSubmitValid)}>
-                <Container p='0px'>
-                            
+                <Container p='0px'>                            
                     <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
                     <FloatingLabel label={label} className="mt-3">
                         <Form.Select ref={register()} name="roomNumber" onChange={roomSelect}>
@@ -182,8 +181,8 @@ const ReserveMain = () => {
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={30}
-                            minTime={setHours(setMinutes(new Date(), 30), 9)}
-                            maxTime={setHours(setMinutes(new Date(), 30), 21)}
+                            // minTime={setHours(setMinutes(new Date(), 30), 9)}
+                            // maxTime={setHours(setMinutes(new Date(), 30), 21)}
                             excludeTimes={startObj}
                             timeCaption="Time"
                             dateFormat="aa h:mm 시작"
@@ -202,7 +201,7 @@ const ReserveMain = () => {
                                 showTimeSelectOnly
                                 timeIntervals={30}
                                 minTime={startTime}
-                                maxTime={setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2)} // 시작 시간부터 2시간
+                                maxTime={(getHours(startTime) < 10 ? (setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2)) : setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime)+1) )} // 시작 시간부터 2시간
                                 excludeTimes={[
                                     // 시작 시간 제외
                                     startTime,
