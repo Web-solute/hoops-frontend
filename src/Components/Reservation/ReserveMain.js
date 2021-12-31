@@ -138,6 +138,36 @@ const ReserveMain = () => {
         return currentDate.getTime() < selectedDate.getTime();
     };
     
+    const maxTimeFilter = () => {
+        const maxHour = getHours(startTime);
+        const maxMinute = getMinutes(startTime);
+        console.log(maxHour);
+        console.log(maxMinute);
+        if(maxHour <= 21){
+            const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2);
+            return maxTime;
+        }
+        if (maxHour === 22){
+            if(maxMinute === 30){
+                const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+1);
+                return maxTime;
+            }else{
+                const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime)+1);
+                console.log(maxTime);
+                return maxTime;
+            }
+
+        }
+        if(maxHour === 23){
+            if(maxMinute === 30){
+                const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                return maxTime;
+            }else{
+                const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime));
+                return maxTime;
+            }
+        }
+    }
 
     // 공지사항
     const [notice, setNotice] = useState(true);
@@ -201,7 +231,7 @@ const ReserveMain = () => {
                                 showTimeSelectOnly
                                 timeIntervals={30}
                                 minTime={startTime}
-                                maxTime={(getHours(startTime) < 10 ? (setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2)) : setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime)+1) )} // 시작 시간부터 2시간
+                                maxTime={maxTimeFilter()} // 시작 시간부터 2시간
                                 excludeTimes={[
                                     // 시작 시간 제외
                                     startTime,
