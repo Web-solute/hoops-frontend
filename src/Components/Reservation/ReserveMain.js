@@ -81,6 +81,7 @@ const ReserveMain = () => {
         setStartTime(time);
         setIsSelected(true);
         setEndTime(null);
+        clearErrors("result");
     };
     const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM);
     const roomSelect = (data) => {
@@ -101,6 +102,7 @@ const ReserveMain = () => {
     const onCompleted = (data) => {
         const {reserveRoom:{ok,id,error}} = data;
         if(!ok){
+            console.log(error);
             return setError("result",{
                 message:error,
             });
@@ -249,6 +251,7 @@ const ReserveMain = () => {
             
                     <Item h="40px"></Item>
                     <Submitbutton type="submit" value="다음" height="50px" m="0px"/>
+                    {/* {errors?.result?.message} */}
                     
                 </Container>
             </form>
