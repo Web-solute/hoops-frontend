@@ -10,9 +10,9 @@ const QRcontainer = styled.div`
     margin-top: 70px;
 `;
 
-const SEE_MY_RESERVATIONS = gql`
-    query myReservation{
-        myReservation{
+const QR_DATA = gql`
+    query QRData{
+        QRData{
             id
             reserveNum
             room{
@@ -33,12 +33,14 @@ const SEE_MY_RESERVATIONS = gql`
 
 const QRmodal = (props) => {
     const {data} = props;
-    const {data:myReservations} = useQuery(SEE_MY_RESERVATIONS);
+    const {data:QRdata} = useQuery(QR_DATA);
     let valueObj = [];
     let valueString = ``;
-    myReservations?.myReservation.map((res)=>{
-        valueString = `${res.id} ${res.room.major} ${res.room.roomNumber} ${res.schedule[0].year}-${res.schedule[0].month}-${res.schedule[0].date} ${res.schedule[0].start} ${res.schedule[res.schedule.length-1].year}-${res.schedule[res.schedule.length-1].month}-${res.schedule[res.schedule.length-1].date} ${res.schedule[res.schedule.length-1].finish}`;
-        valueObj.push(valueString);
+    QRdata?.QRData.map((res)=>{
+        if(res.schedule.length !== 0){
+            valueString = `${res.id} ${res.room.major} ${res.room.roomNumber} ${res.schedule[0].year}-${res.schedule[0].month}-${res.schedule[0].date} ${res.schedule[0].start} ${res.schedule[res.schedule.length-1].year}-${res.schedule[res.schedule.length-1].month}-${res.schedule[res.schedule.length-1].date} ${res.schedule[res.schedule.length-1].finish}`;
+            valueObj.push(valueString);
+        }
     });
     return (
         <Background>
