@@ -27,6 +27,12 @@ const SDatePicker = styled(DatePicker)`
     color: #666666;
 `;
 
+const ErrorMessage = styled.div`
+    font-size: 13px;
+    color: tomato;
+    margin-top: 15px;
+`;
+
 const SEE_ROOM_MAJOR = gql`
     query seeRoomMajor{
         seeRoomMajor{
@@ -200,7 +206,7 @@ const ReserveMain = () => {
                     /></div> */}
             
                     <Subtitle size='17px' className="mt-5">사용할 시간을 지정해주세요</Subtitle>
-                    <Subtitle size='12px' className="mt-2">※ 최대 연속 2시간 사용 가능합니다</Subtitle>
+                    <Subtitle size='12px' className="mt-2">※ 최대 연속 2시간 이용 가능합니다</Subtitle>
                     <Subtitle size='10px' className="mt-2">최대 시작 시간 23:00, 최대 종료 시간 23:30</Subtitle>
                     <div>
                         <SDatePicker
@@ -251,7 +257,7 @@ const ReserveMain = () => {
             
                     <Item h="40px"></Item>
                     <Submitbutton type="submit" value="다음" height="50px" m="0px"/>
-                    {errors?.result?.message}
+                    <ErrorMessage>{errors?.result?.message}</ErrorMessage>
                     
                 </Container>
             </form>
