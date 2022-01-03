@@ -21,7 +21,7 @@ const Manager = () => {
     const {data:Me} = useQuery(ME_QUERY);
     const [managerOption, setManagerOption] = useState(0);
     useEffect(()=>{
-        if(Me?.me?.isManaged === false && Me?.me?.isManaged === undefined){
+        if(Me?.me?.isManaged === false || Me?.me?.isManaged === undefined){
             history.push("/");
         }
         
