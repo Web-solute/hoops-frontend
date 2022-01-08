@@ -5,7 +5,6 @@ import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
 
-import userData from './UserData';
 import { client } from '../../apollo';
 import { useHistory } from 'react-router-dom';
 import routes from '../../routes';

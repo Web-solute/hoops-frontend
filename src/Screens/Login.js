@@ -8,7 +8,6 @@ import {logUserIn} from "../apollo"
 import { useState} from "react";
 import styled from "styled-components";
 import ForgotModal from "../Components/Modal/ForgotModal";
-import InputModal from "../Components/Modal/InputModal";
 
 const ForgotText = styled.div`
     font-size: 13px;

@@ -4,13 +4,11 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
-    padding: ${ props => props.p };
+    padding: ${ props => props.p || '30px' };
 `;
 
 export const Item = styled.div`
-    width: 300px;
-    width: ${ props => props.w };
+    width: ${ props => props.w || '300px' };
     height: ${ props => props.h };
 `;
 
@@ -18,7 +16,6 @@ export const Flex = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding: ${ props => props.padding };
 `;
 
@@ -29,11 +26,8 @@ export const Row = styled.div`
 `;
 
 export const Input = styled.input`
-    width: 300px;
     height: 50px;
-    border: 0.5px solid ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
     padding: 0 20px;
-    margin-top: 25px;
     margin-botton: 10px;
     border-radius: 10px;
     background-color:#fafafa;
@@ -41,41 +35,37 @@ export const Input = styled.input`
     &::placeholder{
         font-size: 17px;
     }
-
-    width: ${ props => props.width };
-    margin-top: ${ props => props.mt };
+    width: ${ props => props.width || '300px' };
+    margin-top: ${ props => props.mt || '25px' };
 `;
 
 export const Submitbutton = styled.input`
     border:none;
     border-radius: 30px;
-    margin-top:30px;
     background-color: #00C5A7;
     color: white;
     text-align:center;
     padding: 8px 0px;
     font-weight: 600;
     width: 120px;
-    height: 60px;
     font-size: 17px;
-
-    height: ${ props => props.height };
+    height: ${ props => props.height || '60px' };
     margin-left: ${ props => props.ml };
-    margin-top: ${ props => props.mt };
+    margin-top: ${ props => props.mt || '30px'};
     margin: ${ props => props.m };
 `;
 
 export const Subtitle = styled.span`
+    color: #666666;
     margin-top: ${ props => props.top };
     font-size: ${ props => props.size };
-    color: #666666;
 `;
 
 export const Smalltext = styled.span`
+    color: #858585;
     margin-top: ${ props => props.top };
     margin-bottom: ${ props => props.bottom };
     font-size: ${ props => props.size };
-    color: #858585;
 `;
 
 export const Absolute = styled.div`

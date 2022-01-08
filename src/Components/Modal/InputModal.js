@@ -5,7 +5,6 @@ import {gql, useMutation} from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Form } from 'react-bootstrap';
-import styled from "styled-components";
 
 const CREATE_ROOM_MUTATION = gql`
     mutation createRoom($roomNumber:Int! $description:String $major:Major! $open:String $closed:String){
