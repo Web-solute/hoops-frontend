@@ -59,8 +59,9 @@ export const Submitbutton = styled.input`
     height: 60px;
     font-size: 17px;
 
-    margin-left: ${ props => props.ml };
     height: ${ props => props.height };
+    margin-left: ${ props => props.ml };
+    margin-top: ${ props => props.mt };
     margin: ${ props => props.m };
 `;
 

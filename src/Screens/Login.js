@@ -5,6 +5,19 @@ import routes from "../routes";
 import { useForm } from "react-hook-form";
 import {gql, useMutation} from "@apollo/client";
 import {logUserIn} from "../apollo"
+import { useState} from "react";
+import styled from "styled-components";
+import ForgotModal from "../Components/Modal/ForgotModal";
+import InputModal from "../Components/Modal/InputModal";
+
+const ForgotText = styled.div`
+    font-size: 13px;
+    margin-top: 8px;
+    color: #858585;
+    text-decoration: underline;
+    text-underline-position: under;
+    cursor: pointer;
+`;
 
 const LOGIN_MUTATION = gql`
     mutation login($studentId:String!,$password:String!){
@@ -61,8 +74,11 @@ function Login() {
         })
     };
 
+    const [forgot, setForgot] = useState(false);
+
     return (
         <Container>
+            { forgot === true ? <ForgotModal setForgot={setForgot} /> : null } 
             <Subtitle top="50px" size="22px">로그인</Subtitle>
             <form onSubmit={handleSubmit(onSubmitValid)}>
                 <Flex>
@@ -92,12 +108,13 @@ function Login() {
                     hasError={Boolean(errors?.password?.message)}
                 />
                 {errors?.password?.message}
-                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} ml="200px"></Submitbutton>
+                <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} ml="180px"></Submitbutton>
                 </Flex>
             </form>
             <Smalltext top="40px">
                 계정이 없으신가요? <Link to={routes.signUp} style={{ textDecoration: 'none', color: '#565656' }}>회원가입</Link>
             </Smalltext>
+            <ForgotText onClick={() => {setForgot(true)}}>비밀번호 찾기</ForgotText>
         </Container>
     );
 }

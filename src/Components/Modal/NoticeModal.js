@@ -1,7 +1,6 @@
 import { Background, Window, Popup } from "./Modal";
 import { Flex, Absolute, Subtitle } from "../shared";
 import styled from "styled-components";
-
 import cancel from '../../images/cancel.png';
 import logo2 from '../../images/logo2.png';
 

@@ -16,13 +16,6 @@ const CREATE_ROOM_MUTATION = gql`
     }
 `;
 
-const Notice = styled.div`
-    font-size: 14px;
-    color: #858585;
-    margin-top: ${props => props.top};
-    margin-bottom: ${props => props.bottom};
-`;
-
 const InputModal = (props) => {
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
@@ -109,7 +102,7 @@ const InputModal = (props) => {
                             type="text"  
                             placeholder="닫는 시간"
                         />
-                        <Submitbutton type="submit" value={ loading ? "Loading..." : props.buttonText} disabled={!formState.isValid|| loading}  ml='70px' mt='20px' height='45px' />
+                        <Submitbutton type="submit" value={ loading ? "Loading..." : props.buttonText} disabled={!formState.isValid|| loading}  ml='70px' height='45px' />
                     </form>
                 </Flex>
                 </Popup>
