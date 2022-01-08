@@ -1,6 +1,5 @@
 import { Background, Window, Popup } from "./Modal";
 import { Flex, Absolute, Subtitle, Submitbutton } from "../shared";
-
 import cancel from '../../images/cancel.png';
 
 const MypageModal = (props) => {
