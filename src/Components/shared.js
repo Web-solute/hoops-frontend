@@ -32,9 +32,7 @@ export const Input = styled.input`
     border-radius: 10px;
     background-color:#fafafa;
     border: 1px solid #C4C4C4;
-    &::placeholder{
-        font-size: 17px;
-    }
+    font-size: 17px;
     width: ${ props => props.width || '300px' };
     margin-top: ${ props => props.mt || '25px' };
 `;
@@ -58,7 +56,6 @@ export const Submitbutton = styled.input`
 export const Subtitle = styled.span`
     color: #666666;
     margin-top: ${ props => props.top };
-    padding-bottom: ${ props => props.pb };
     font-size: ${ props => props.size };
 `;
 
