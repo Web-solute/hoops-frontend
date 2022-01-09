@@ -58,6 +58,7 @@ export const Submitbutton = styled.input`
 export const Subtitle = styled.span`
     color: #666666;
     margin-top: ${ props => props.top };
+    padding-bottom: ${ props => props.pb };
     font-size: ${ props => props.size };
 `;
 
