@@ -6,7 +6,7 @@ import logo2 from '../../images/logo2.png';
 import styled from "styled-components";
 import { useState } from "react";
 import MypageModal from "./MypageModal"
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 const ListItem = styled.div `
     width: 260px;

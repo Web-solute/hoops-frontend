@@ -3,7 +3,6 @@ import { Flex, Absolute, Subtitle, Submitbutton } from "../shared";
 import cancel from '../../images/cancel.png';
 import { gql, useMutation } from "@apollo/client";
 
-
 const DELETE_RESERVATION_MUTATION = gql`
     mutation deleteReservation($id:Int!){
         deleteReservation(id:$id){
