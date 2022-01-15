@@ -58,6 +58,7 @@ const ListModal = (props) => {
                     {/* 예약 내역이 없는 경우 */}
                     {/* <Subtitle size='16px' top='15px'>예약 내역이 없습니다!</Subtitle> */}
                     {/* 예약 내역이 있는 경우 */}
+                    <div style={{ maxHeight: '400px', overflow: 'auto'}}>
                     {data?.myReservationToday?.map((res)=>(
                         <ListItem key={res.id}>
                             <Subtitle size='14px'>{res.room.roomNumber}번 스터디룸</Subtitle>
@@ -67,19 +68,19 @@ const ListModal = (props) => {
                             </div>
                         </ListItem>
                     ))}
+                    </div>
                     <img src={logo2} height="60" alt='logo2'/>
                 </Flex>
                 </Popup>
             </Window>
         </Background>
-        { cancelModal === true ? 
+        { cancelModal && 
             <MypageModal
                 id={id} 
                 setModal={setCancelModal} 
                 setText={'예약취소'} 
                 setAction = {cancelReservation}
             /> 
-            : null 
         } 
         </>
     );
