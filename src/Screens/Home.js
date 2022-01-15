@@ -45,7 +45,7 @@ function Home() {
 
     return (
         <Container>
-            { qr === true ? <QRmodal setQr={setQr} data={data?.me?.studentId} /> : null } 
+            { qr && <QRmodal setQr={setQr} data={data?.me?.studentId} /> } 
             <Link>
                 <img onClick={ ()=>{ setQr(true) }} src={QR_button} alt='QR_button' />
             </Link>

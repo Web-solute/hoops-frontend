@@ -108,8 +108,8 @@ export const Room = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            { createModal === true ? <InputModal setModal={setCreateModal} buttonText={'생성'} /> : null } 
-            { updateModal === true ? <UpdateModal setModal={setUpdateModal} value={Id} buttonText={'수정'} /> : null }
+            { createModal && <InputModal setModal={setCreateModal} buttonText={'생성'} /> } 
+            { updateModal && <UpdateModal setModal={setUpdateModal} value={Id} buttonText={'수정'} /> }
             <Row>
                 <div onClick={()=>setCreateModal(true)} style={{ border: 0, background: 'none', marginLeft: '200px' }}>
                     <img src={room_create_button} alt='room_create_button'/>

@@ -77,7 +77,7 @@ function Login() {
 
     return (
         <Container>
-            { forgot === true ? <ForgotModal setForgot={setForgot} /> : null } 
+            { forgot && <ForgotModal setForgot={setForgot} /> } 
             <Subtitle top="50px" size="22px">로그인</Subtitle>
             <form onSubmit={handleSubmit(onSubmitValid)}>
                 <Flex>
