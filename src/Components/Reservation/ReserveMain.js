@@ -1,4 +1,4 @@
-import { Subtitle, Submitbutton, Item, Container } from '../shared';
+import { Subtitle, Submitbutton, Item, Container, ErrorMessage } from '../shared';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import styled from "styled-components";
 import { useState} from "react";
@@ -25,12 +25,6 @@ const SDatePicker = styled(DatePicker)`
     cursor: pointer;
     text-align: center;
     color: #666666;
-`;
-
-const ErrorMessage = styled.div`
-    font-size: 13px;
-    color: tomato;
-    margin-top: 15px;
 `;
 
 const SEE_ROOM_MAJOR = gql`
