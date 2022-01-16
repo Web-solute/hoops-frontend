@@ -73,3 +73,9 @@ export const Absolute = styled.div`
     top: ${ props => props.top };
     bottom: ${ props => props.bottom };
 `;
+
+export const ErrorMessage = styled.div`
+    font-size: 13px;
+    color: tomato;
+    margin-top: 5px;
+`;

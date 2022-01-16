@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex } from "../Components/shared";
+import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex, ErrorMessage } from "../Components/shared";
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import { useForm } from "react-hook-form";
@@ -83,7 +83,7 @@ function Login() {
                 <Flex>
                 <Input 
                     ref={register({
-                        required:"StudentId is Required",
+                        required:"학번을 정확하게 입력해주세요",
                         minLength:{
                             value:9,
                             message:"학번을 정확하게 입력해주세요"
@@ -95,10 +95,10 @@ function Login() {
                     type="text"
                     hasError={Boolean(errors?.studentId?.message)}
                 />
-                {errors?.studentId?.message}
+                <ErrorMessage>{errors?.studentId?.message}</ErrorMessage>
                 <Input 
                     ref={register({
-                        required:"Password is Required",
+                        required:"비밀번호를 입력해주세요",
                     })}
                     onChange={clearLoginError}
                     placeholder="비밀번호를 입력해주세요"
@@ -106,7 +106,7 @@ function Login() {
                     type="password"
                     hasError={Boolean(errors?.password?.message)}
                 />
-                {errors?.password?.message}
+                <ErrorMessage>{errors?.password?.message}</ErrorMessage>
                 <Submitbutton type="submit" value={"로그인 →"} disabled={!formState.isValid} ml="180px"></Submitbutton>
                 </Flex>
             </form>

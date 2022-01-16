@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex, Row } from "../Components/shared";
+import { Container, Subtitle, Input, Submitbutton, Smalltext, Flex, Row, ErrorMessage } from "../Components/shared";
 import { Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import routes from "../routes";
@@ -108,7 +108,7 @@ function Signup() {
                     type="text"  
                     placeholder="이름"
                 />
-                {errors?.name?.message}
+                <ErrorMessage>{errors?.name?.message}</ErrorMessage>
                 <Input
                     ref={register({
                         required:"이메일을 입력해주세요"
@@ -118,7 +118,7 @@ function Signup() {
                     type="email"  
                     placeholder="이메일"
                 />
-                {errors?.email?.message}
+                <ErrorMessage>{errors?.email?.message}</ErrorMessage>
                 <Input
                     ref={register({
                         required:"학번을 입력해주세요",
@@ -132,7 +132,7 @@ function Signup() {
                     type="text"  
                     placeholder="학번"
                 />
-                {errors?.studentId?.message}
+                 <ErrorMessage>{errors?.studentId?.message}</ErrorMessage>
                 <Input
                     ref={register({
                         required:"비밀번호를 입력해주세요",
@@ -146,7 +146,7 @@ function Signup() {
                     type="password"  
                     placeholder="비밀번호"
                 />
-                {errors?.password?.message}
+               <ErrorMessage>{errors?.password?.message}</ErrorMessage>
                 {/*<Input 
                     placeholder="비밀번호 확인"
                 />*/}
@@ -182,8 +182,8 @@ function Signup() {
                     </Form.Select>
                     </Form.Group>
                 </Row>
-                {errors?.campus?.message}
-                {errors?.major?.message}
+                <ErrorMessage>{errors?.campus?.message}</ErrorMessage>
+                <ErrorMessage>{errors?.major?.message}</ErrorMessage>
                 <Form.Group controlId="formFile">
                     <Notice top="15px" bottom="10px">학생증 사진을 넣어주세요</Notice>
                     <Form.Control  

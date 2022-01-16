@@ -1,5 +1,5 @@
 import { Background, Window, Popup } from "./Modal";
-import { Flex, Absolute, Subtitle, Input, Submitbutton } from "../shared";
+import { Flex, Absolute, Subtitle, Input, Submitbutton, ErrorMessage } from "../shared";
 import cancel from '../../images/cancel.png';
 import { useForm } from "react-hook-form";
 import { gql,useMutation } from "@apollo/client";
@@ -68,7 +68,7 @@ const ForgotModal = (props) => {
                             type="text"
                             hasError={Boolean(errors?.studentId?.message)}    
                         />
-                        {errors?.studentId?.message}
+                        <ErrorMessage>{errors?.studentId?.message}</ErrorMessage>
                         <Subtitle size='12px' top='15px'>※ 이메일로 새로운 비밀번호가 발송됩니다!</Subtitle>
                         <Submitbutton type="submit" value={"확인"} height='45px' mt='25px'></Submitbutton>
                         </Flex>
