@@ -30,13 +30,13 @@ const MY_RESERVATION_TODAY_QUERY = gql`
             }
         }
     }
-
 `;
 
 const ListModal = (props) => {
     const [cancelModal, setCancelModal] = useState(false);
     const [id,setId] = useState(""); 
     const {data} = useQuery(MY_RESERVATION_TODAY_QUERY);
+    console.log(data);
     const cancelReservation = (e) => {
         console.log('예약이 취소되었습니다');
         setCancelModal(false);
