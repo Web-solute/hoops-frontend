@@ -26,16 +26,16 @@ function App() {
             <Route path={routes.home} exact>
               {isLoggedIn ? <Home/> : <Login />}
             </Route>
-            {!isLoggedIn ? (
+            {!isLoggedIn && 
               <Route path={routes.signUp} component={Signup} />
-            ):null}
-            {isLoggedIn?(
+            }
+            {isLoggedIn &&
             <>
             <Route path={routes.reservation} component={Reservation} />
             <Route path={routes.myPage + "/:studentId"} component={Mypage} />
             <Route path={routes.manager} component={Manager} />
             </>
-            ):null}
+            }
             <Redirect to="/" />
         </Switch>
       </Router>

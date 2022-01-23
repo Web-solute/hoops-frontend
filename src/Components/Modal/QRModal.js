@@ -6,8 +6,19 @@ import logo2 from '../../images/logo2.png';
 import QRCode from 'react-qr-code';
 import { gql, useQuery } from "@apollo/client";
 
-const QRcontainer = styled.div`
-    margin-top: 70px;
+// https://www.npmjs.com/package/react-qr-code
+
+const QrContaiener = styled.div`
+    width: 250px;
+    height: 250px;
+    padding: 30px;
+    border: 3px solid #00C5A7;
+    border-radius: 35px;
+`;
+
+const QrText = styled.div`
+    margin-top: 80px;
+    color: #00C5A7;
 `;
 
 const QR_DATA = gql`
@@ -48,9 +59,10 @@ const QRmodal = (props) => {
                 <Popup height='500px'>
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setQr(false) }} src={cancel} alt='cancel'/></Absolute>
-                    <QRcontainer>
-                        <QRCode value={`${valueObj}`} />
-                    </QRcontainer>
+                        <QrText>입장을 위한 QR Code</QrText>
+                        <QrContaiener>
+                            <QRCode value={`${valueObj}`} level='L' size='185' />
+                        </QrContaiener>
                     <Absolute bottom='20px'><img src={logo2} height="60" alt='logo2'/></Absolute>
                 </Flex>
                 </Popup>
