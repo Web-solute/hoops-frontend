@@ -83,7 +83,7 @@ const ReserveMain = () => {
         setEndTime(null);
         clearErrors("result");
     };
-    const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM);
+    const [disableRoom,{data:disables}] = useLazyQuery(DISABLED_ROOM,{pollInterval:500});
     const roomSelect = (data) => {
         disableRoom({variables:{roomId:Number(data.target.value)}})
     }
@@ -145,14 +145,32 @@ const ReserveMain = () => {
         const maxMinute = getMinutes(startTime);
         if(maxHour <= 21){
             const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2);
+            const maxT = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+            const temp = startObj.filter(start => ((start > maxT) && start < maxTime));
+            const tmp = finishObj.filter(finish => ((finish > maxT) && finish < maxTime));
+            if(temp.length !== 0 && tmp.length !== 0){
+                return temp[0];
+            }
             return maxTime;
         }
         if (maxHour === 22){
             if(maxMinute === 30){
                 const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+1);
+                const maxT = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                const temp = startObj.filter(start => ((start > maxT) && start < maxTime));
+                const tmp = finishObj.filter(finish => ((finish > maxT) && finish < maxTime));
+                if(temp.length !== 0 && tmp.length !== 0){
+                    return temp[0];
+                }
                 return maxTime;
             }else{
                 const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime)+1);
+                const maxT = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                const temp = startObj.filter(start => ((start > maxT) && start < maxTime));
+                const tmp = finishObj.filter(finish => ((finish > maxT) && finish < maxTime));
+                if(temp.length !== 0 && tmp.length !== 0){
+                    return temp[0];
+                }
                 return maxTime;
             }
 
@@ -160,9 +178,21 @@ const ReserveMain = () => {
         if(maxHour === 23){
             if(maxMinute === 30){
                 const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                const maxT = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                const temp = startObj.filter(start => ((start > maxT) && start < maxTime));
+                const tmp = finishObj.filter(finish => ((finish > maxT) && finish < maxTime));
+                if(temp.length !== 0 && tmp.length !== 0){
+                    return temp[0];
+                }
                 return maxTime;
             }else{
                 const maxTime = setHours(setMinutes(new Date(), getMinutes(startTime)+30), getHours(startTime));
+                const maxT = setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime));
+                const temp = startObj.filter(start => ((start > maxT) && start < maxTime));
+                const tmp = finishObj.filter(finish => ((finish > maxT) && finish < maxTime));
+                if(temp.length !== 0 && tmp.length !== 0){
+                    return temp[0];
+                }
                 return maxTime;
             }
         }
