@@ -6,7 +6,7 @@ import reservation_button from '../images/reservation_button.png';
 import mypage_button from '../images/mypage_button.png';
 import { Link } from "react-router-dom";
 import routes from "../routes";
-import {gql, useQuery, useReactiveVar} from "@apollo/client";
+import {gql, useMutation, useQuery, useReactiveVar} from "@apollo/client";
 import { useEffect, useState } from "react";
 import QRmodal from "../Components/Modal/QRModal";
 
@@ -35,20 +35,21 @@ function Home() {
     const {data} = useQuery(ME_QUERY,{
         skip:!hasToken
     });
+
+    const [qr, setQr] = useState(false);
     useEffect(()=>{
         if(data?.me === null){
             logUserOut();
         }
-    },[data]);
-
-    const [qr, setQr] = useState(false);
+        console.log(qr)
+    },[data,qr]);
 
     return (
         <Container>
-            { qr && <QRmodal setQr={setQr} data={data?.me?.studentId} /> } 
-            <Link>
-                <img onClick={ ()=>{ setQr(true) }} src={QR_button} alt='QR_button' />
-            </Link>
+            { qr && <QRmodal qr={qr} setQr={setQr} data={data?.me?.studentId} /> } 
+            <div>
+                <img onClick={ () => setQr(true)} src={QR_button} alt='QR_button' />
+            </div>
             <Subtitle top="20px" size="22px">{data?.me?.name}</Subtitle>
             <Smalltext top="10px">{data?.me?.studentId}</Smalltext>
             <Smalltext top="10px">{data?.me?.major}</Smalltext>

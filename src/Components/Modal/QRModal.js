@@ -4,7 +4,9 @@ import { Background, Window, Popup } from "./Modal";
 import cancel from '../../images/cancel.png';
 import logo2 from '../../images/logo2.png';
 import QRCode from 'react-qr-code';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 
 // https://www.npmjs.com/package/react-qr-code
 
@@ -20,48 +22,101 @@ const QrText = styled.div`
     margin-top: 80px;
     color: #00C5A7;
 `;
+const QrTimer = styled.div`
+    margin-top: 20px;
+    color: #00C5A7;
+`;
+
+const FALSE_QR = gql`
+    mutation falseQR($qr:String!){
+        falseQR(qr:$qr){
+            ok
+            error
+        }
+    }
+`;
+const TRUE_QR = gql`
+    mutation trueQR($qr:String!){
+        trueQR(qr:$qr){
+            ok
+            error
+        }
+    }
+`;
+const ALL_FALSE_QR = gql`
+    mutation allFalseQR{
+        allFalseQR{
+            ok
+            error
+        }
+    }
+`;
 
 const QR_DATA = gql`
-    query QRData{
-        QRData{
+    query QRValid{
+        QRValid{
             id
-            reserveNum
-            room{
-                major
-    	        roomNumber
-            }
-            schedule{
-                id
-                year
-                month
-                date
-                start
-                finish
-            }
+            qr
+            activate
         }
     }
 `;
 
 const QRmodal = (props) => {
-    const {data} = props;
-    const {data:QRdata} = useQuery(QR_DATA);
-    let valueObj = [];
-    let valueString = ``;
-    QRdata?.QRData.map((res)=>{
-        if(res.schedule.length !== 0){
-            valueString = `${res.id} ${res.room.major} ${res.room.roomNumber} ${res.schedule[0].year}-${res.schedule[0].month}-${res.schedule[0].date} ${res.schedule[0].start} ${res.schedule[res.schedule.length-1].year}-${res.schedule[res.schedule.length-1].month}-${res.schedule[res.schedule.length-1].date} ${res.schedule[res.schedule.length-1].finish}`;
-            valueObj.push(valueString);
+    const qr = props.qr;
+    const {data} = useQuery(QR_DATA,{pollInterval:16000});
+    const [falseQR] = useMutation(FALSE_QR);
+    const [trueQR] = useMutation(TRUE_QR);
+    const [allFalseQR] = useMutation(ALL_FALSE_QR);
+    const [seconds, setSeconds] = useState(15);
+    
+    useEffect(() => {
+      const countdown = setInterval(() => {  
+        if(parseInt(seconds) === 15){
+            trueQR({
+                variables:{
+                    qr:`${data?.QRValid?.qr}`
+                },
+            });
+        }  
+        if (parseInt(seconds) > 0) {
+            setSeconds(parseInt(seconds) - 1);
         }
-    });
+        if (parseInt(seconds) === 0) {
+            clearInterval(countdown);
+            falseQR({
+                variables:{
+                    qr:`${data?.QRValid?.qr}`
+                },
+            });
+            setSeconds(15);
+        }
+      }, 1000);
+      return () => clearInterval(countdown);
+    }, [seconds]);
+
+    // window.setInterval(()=>{
+    //     if(qr === true){
+    //         props.setQr(false);
+    //     }
+    // },15000)
     return (
         <Background>
             <Window>
                 <Popup height='500px'>
                 <Flex padding='20px'>
-                    <Absolute right='15px'><img onClick={ ()=>{ props.setQr(false) }} src={cancel} alt='cancel'/></Absolute>
+                    <Absolute right='15px'>
+                        <img onClick={ 
+                            ()=>{ 
+                                allFalseQR();
+                                props.setQr(false); 
+                        }} src={cancel} alt='cancel'
+                        />
+                    </Absolute>
                         <QrText>입장을 위한 QR Code</QrText>
+                        <QrTimer>{seconds}</QrTimer>
                         <QrContaiener>
-                            <QRCode value={`${valueObj}`} level='L' size='185' />
+                            <QRCode value={`${data?.QRValid?.qr}`} level='L' size={185} />
                         </QrContaiener>
                     <Absolute bottom='20px'><img src={logo2} height="60" alt='logo2'/></Absolute>
                 </Flex>
