@@ -26,7 +26,6 @@ const ME_QUERY = gql`
             studentId
             name
             major
-            activation
         }
     }
 `;
@@ -46,7 +45,7 @@ function Home() {
 
     return (
         <Container>
-            { qr && <QRmodal qr={qr} setQr={setQr} data={data?.me?.studentId} activation={data?.me?.activation}/> } 
+            { qr && <QRmodal qr={qr} setQr={setQr} data={data?.me?.studentId} /> } 
             <div>
                 <img onClick={ () => setQr(true)} src={QR_button} alt='QR_button' />
             </div>

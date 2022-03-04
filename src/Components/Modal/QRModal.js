@@ -43,32 +43,21 @@ const TRUE_QR = gql`
         }
     }
 `;
-const ALL_FALSE_QR = gql`
-    mutation allFalseQR{
-        allFalseQR{
-            ok
-            error
-        }
-    }
-`;
-
 const QR_DATA = gql`
     query QRValid{
         QRValid{
             id
             qr
+            activate
         }
     }
 `;
 
 const QRmodal = (props) => {
-    const activation = props.activation;
     const {data} = useQuery(QR_DATA,{pollInterval:16000});
     const [falseQR] = useMutation(FALSE_QR);
-    const [trueQR] = useMutation(TRUE_QR);
-    const [allFalseQR] = useMutation(ALL_FALSE_QR);
+    const [trueQR] = useMutation(TRUE_QR)
     const [seconds, setSeconds] = useState(15);
-    console.log(activation);
     useEffect(() => {
       const countdown = setInterval(() => {  
         if(parseInt(seconds) === 15){
@@ -79,23 +68,26 @@ const QRmodal = (props) => {
                 refetchQueries:QR_DATA,
                 awaitRefetchQueries:true
             });
+            setSeconds(parseInt(seconds) - 1);
         }  
-        if (parseInt(seconds) > 0) {
+        if (parseInt(seconds) > 0 && parseInt(seconds) < 15) {
             setSeconds(parseInt(seconds) - 1);
         }
         if (parseInt(seconds) === 0) {
             clearInterval(countdown);
+            falseQR({
+                variables:{
+                    qr:`${data?.QRValid?.qr}`
+                },
+                refetchQueries:QR_DATA,
+                awaitRefetchQueries:true
+            });
             setSeconds(15);
         }
       }, 1000);
       return () => clearInterval(countdown);
     }, [seconds]);
 
-    // window.setInterval(()=>{
-    //     if(qr === true){
-    //         props.setQr(false);
-    //     }
-    // },15000)
     return (
         <Background>
             <Window>
@@ -117,8 +109,7 @@ const QRmodal = (props) => {
                         <QrText>입장을 위한 QR Code</QrText>
                         <QrTimer>{seconds}</QrTimer>
                         <QrContaiener>
-                            <QRCode value={`{${data?.QRValid?.id}:${data?.QRValid?.qr} ${activation}}`} level='L' size={185} />
-                            {`{${data?.QRValid?.id}:${data?.QRValid?.qr} ${activation}}`}
+                            <QRCode value={`{${data?.QRValid?.id}:${data?.QRValid?.qr}${Number(data?.QRValid?.activate)}}`} level='L' size={185} />
                         </QrContaiener>
                     <Absolute bottom='20px'><img src={logo2} height="60" alt='logo2'/></Absolute>
                 </Flex>
