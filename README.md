@@ -10,3 +10,12 @@
 
 ## Architecture
 <img src="src/images/architecture.png" height="300">
+
+## Stack
+
+| Category  | Stack                                                     |
+| --------- | --------------------------------------------------------- |
+| Front-end | `React` `styled-components` `JavaScript` `Apollo GraphQL` |
+| Back-end  | `Node.js` `Express` `PostgreSQL`                          |
+| Design    | `Figma`                                                   |
+| Embedded  | `Raspberry Pi`                                            |
