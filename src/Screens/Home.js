@@ -26,6 +26,7 @@ const ME_QUERY = gql`
             studentId
             name
             major
+            activation
         }
     }
 `;
@@ -35,18 +36,17 @@ function Home() {
     const {data} = useQuery(ME_QUERY,{
         skip:!hasToken
     });
-
+    console.log(data);
     const [qr, setQr] = useState(false);
     useEffect(()=>{
         if(data?.me === null){
             logUserOut();
         }
-        console.log(qr)
     },[data,qr]);
 
     return (
         <Container>
-            { qr && <QRmodal qr={qr} setQr={setQr} data={data?.me?.studentId} /> } 
+            { qr && <QRmodal qr={qr} setQr={setQr} data={data?.me?.studentId} activation={data?.me?.activation}/> } 
             <div>
                 <img onClick={ () => setQr(true)} src={QR_button} alt='QR_button' />
             </div>
