@@ -35,7 +35,7 @@ function Home() {
     const {data} = useQuery(ME_QUERY,{
         skip:!hasToken
     });
-    console.log(data);
+    
     const [qr, setQr] = useState(false);
     useEffect(()=>{
         if(data?.me === null){
