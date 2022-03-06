@@ -109,7 +109,11 @@ const QRmodal = (props) => {
                         <QrText>입장을 위한 QR Code</QrText>
                         <QrTimer>{seconds}</QrTimer>
                         <QrContaiener>
-                            <QRCode value={`{${data?.QRValid?.id}:${data?.QRValid?.qr}${Number(data?.QRValid?.activate)}}`} level='L' size={185} />
+                            {(data?.QRValid?.activate === true) ? 
+                                    <QRCode value={`{${data?.QRValid?.id}:1}`} level='L' size={185} /> 
+                                :
+                                    <QRCode value={`{${data?.QRValid?.id}:0}`} level='L' size={185} />
+                            }
                         </QrContaiener>
                     <Absolute bottom='20px'><img src={logo2} height="60" alt='logo2'/></Absolute>
                 </Flex>
