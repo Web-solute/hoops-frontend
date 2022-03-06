@@ -172,7 +172,7 @@ export const User = () => {
                                 <TableRow key={user.studentId}>
                                     <TableCell>
                                         <AvatarContainer>
-                                            <img style={{maxWidth:"100%"}} src={user.idCard}/>
+                                            <img style={{maxWidth:"100%"}} alt={user.studentId} src={user.idCard}/>
                                         </AvatarContainer>
                                     </TableCell>
                                     <TableCell component="th" scope="row">

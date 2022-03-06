@@ -96,7 +96,7 @@ export const Room = () => {
                                     <input type="image" src={room_update_button} alt='room_delete_button' value={room.id} onClick={onClick}  style={{ border: 0, background: 'none'}}/>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <input type="image" src={room_delete_button} value={room.id} onClick={onDeleteClick} />
+                                    <input type="image" alt="room_delete_button" src={room_delete_button} value={room.id} onClick={onDeleteClick} />
                                 </TableCell>
                                 <TableCell>{room.roomNumber}</TableCell>
                                 <TableCell>{room.major}</TableCell>

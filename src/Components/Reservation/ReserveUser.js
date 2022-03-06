@@ -1,10 +1,8 @@
 import { Subtitle, Item, Submitbutton, Container, Input } from '../shared';
-import { InputGroup, FormControl } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation} from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
-import { client } from '../../apollo';
 import { useHistory } from 'react-router-dom';
 import routes from '../../routes';
 
@@ -43,7 +41,7 @@ const SearchUser = (props) => {
         />
         <Item w='230px'><datalist id ={props.name}>
             {data?.searchUsers?.filter((val) => {
-                if(props.searchTerm == ""){
+                if(props.searchTerm === ""){
                     return val
                 }else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
                     return val
@@ -58,7 +56,7 @@ const SearchUser = (props) => {
 const ReserveUser = () => {
     const location = useLocation();
     const history = useHistory();
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {handleSubmit,setError} = useForm({
         mode:"onChange",
     });
     const [searchTerm1, setSearchTerm1] = useState("");
@@ -72,7 +70,7 @@ const ReserveUser = () => {
             });
         }
     };
-    const [addMember,{loading}] = useMutation(ADD_MEMBER_MUTATION,{
+    const [addMember] = useMutation(ADD_MEMBER_MUTATION,{
         onCompleted
     });
     const onSubmitValid = (data) => {

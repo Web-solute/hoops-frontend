@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Form } from 'react-bootstrap';
 
 const CREATE_ROOM_MUTATION = gql`
-    mutation createRoom($roomNumber:Int! $description:String $major:Major! $open:String $closed:String){
+    mutation createRoom($roomNumber:Int! $description:String! $major:Major! $open:String $closed:String){
         createRoom(roomNumber:$roomNumber description:$description major:$major open:$open closed:$closed){
             ok
             error
@@ -16,9 +16,10 @@ const CREATE_ROOM_MUTATION = gql`
 `;
 
 const InputModal = (props) => {
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {register,handleSubmit,formState,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
+    const [option, setOption] = useState("-1");
     const onCompleted = (data) => {
         const {createRoom:{ok,error}} = data;
         if(!ok){
@@ -31,15 +32,16 @@ const InputModal = (props) => {
         onCompleted
     });
     const onSubmitValid = (data) => {
-        const {roomNumber, description, major, open, closed} = getValues();
+        const {roomNumber, description, open, closed} = getValues();
         if(loading){
             return;
         }
+
         createRoom({
             variables:{
                 roomNumber:Number(roomNumber),
                 description,
-                major,
+                major:option,
                 open,
                 closed
             }
@@ -49,7 +51,7 @@ const InputModal = (props) => {
     const clearSignUpError = () => {
         clearErrors("result");
     };
-    const [option, setOption] = useState("-1");
+    
     const onSelect = (event) => {
         return setOption(() => event.target.value);
     };

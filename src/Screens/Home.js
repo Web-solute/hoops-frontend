@@ -6,7 +6,7 @@ import reservation_button from '../images/reservation_button.png';
 import mypage_button from '../images/mypage_button.png';
 import { Link } from "react-router-dom";
 import routes from "../routes";
-import {gql, useMutation, useQuery, useReactiveVar} from "@apollo/client";
+import {gql, useQuery, useReactiveVar} from "@apollo/client";
 import { useEffect, useState } from "react";
 import QRmodal from "../Components/Modal/QRModal";
 

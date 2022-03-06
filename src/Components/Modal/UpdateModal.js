@@ -29,16 +29,11 @@ const UPDATE_ROOM_MUTATION = gql`
 
 const UpdateModal = (props) => {
     const roomId = props.value;
-    const [RoomNumber,setRoomNumber] = useState();
-    const [Description,setDescription] = useState("");
-    const [Major,setMajor] = useState("");
-    const [Open,setOpen] = useState("");
-    const [Closed,setClosed] = useState(""); 
-    const [option, setOption] = useState("-1");
+    const [Option, setOption] = useState("-1");
     const onSelect = (event) => {
         return setOption(() => event.target.value);
     };
-    const {register, handleSubmit, errors, formState,getValues,setError,clearErrors} = useForm({
+    const {register, handleSubmit, formState,setError,clearErrors} = useForm({
         mode: "onChange",
     });
 
@@ -58,11 +53,10 @@ const UpdateModal = (props) => {
             return;
         }
         const {major,roomNumber,description,open,closed} = data;
-        console.log(data);
         updateRoom({
             variables:{
                 id:roomId,
-                ...(major  && {major}),
+                ...(major  && {major:Option}),
                 ...(roomNumber && {roomNumber:Number(roomNumber)}),
                 ...(description && {description}),
                 ...(open && {open}),
@@ -71,22 +65,11 @@ const UpdateModal = (props) => {
         });
         props.setModal(false);
     }
-
-    const RoomComplted = (data) => {
-        const {seeRoom:{roomNumber,description,major,open,closed}} = data;
-        setRoomNumber(roomNumber);
-        setDescription(description);
-        setMajor(major);
-        setOpen(open);
-        setClosed(closed);
-    };
     const {data} = useQuery(SEE_ROOM_QUERY,{
         variables:{
             id:roomId
         },
-        onCompleted:RoomComplted
     });
-
     const clearSignUpError = () => {
         clearErrors("result");
     };
@@ -97,7 +80,7 @@ const UpdateModal = (props) => {
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setModal(false) }} src={cancel} alt='cancel'/></Absolute>
                     <form onSubmit={handleSubmit(onSubmitValid)}>
-                        <Form.Group controlId="formGridState" class='mt-5'>
+                        <Form.Group controlId="formGridState" className='mt-5'>
                             <Form.Select defaultValue="학과 선택" onChange={onSelect} ref={register()} name="major">
                                 <option value="-1">학과 선택</option>
                                 <option value="Computer">컴퓨터공학부</option>
@@ -110,7 +93,7 @@ const UpdateModal = (props) => {
                             onChange={()=>clearSignUpError()}
                             name="roomNumber"
                             type="text"  
-                            placeholder={RoomNumber}
+                            placeholder={data?.seeRoom?.roomNumber}
                         />
                         <Input 
                             mt='20px' width='260px'
@@ -118,7 +101,7 @@ const UpdateModal = (props) => {
                             onChange={()=>clearSignUpError()}
                             name="description"
                             type="text"  
-                            placeholder={Description}
+                            placeholder={data?.seeRoom?.description}
                         />
                         <Input 
                             mt='20px' width='260px'
@@ -126,7 +109,7 @@ const UpdateModal = (props) => {
                             onChange={()=>clearSignUpError()}
                             name="open"
                             type="text"  
-                            placeholder={Open}
+                            placeholder={data?.seeRoom?.open}
                         />
                         <Input 
                             mt='20px' width='260px'
@@ -134,7 +117,7 @@ const UpdateModal = (props) => {
                             onChange={()=>clearSignUpError()}
                             name="closed"
                             type="text"  
-                            placeholder={Closed}
+                            placeholder={data?.seeRoom?.closed}
                         />
                         <Submitbutton type="submit" value={ loading ? "Loading..." : props.buttonText} disabled={!formState.isValid|| loading}  ml='70px' mt='20px' height='45px'/>
                     </form>

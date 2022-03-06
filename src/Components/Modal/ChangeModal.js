@@ -14,7 +14,7 @@ const UPDATE_PASSWORD = gql`
 `
 
 const ChangeModal = (props) => {
-    const {register,handleSubmit,errors,formState,setError,clearErrors,getValues} = useForm({
+    const {register,handleSubmit,errors,setError,clearErrors,getValues} = useForm({
         mode:"onChange",
     });
     const onCompleted = (data) => {

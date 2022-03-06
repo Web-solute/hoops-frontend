@@ -64,7 +64,7 @@ const RESERVE_ROOM = gql`
 
 const ReserveMain = () => {
     const history = useHistory();
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {register,handleSubmit,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
     const {data} = useQuery(SEE_ROOM_MAJOR);

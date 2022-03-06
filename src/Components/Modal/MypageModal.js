@@ -13,7 +13,7 @@ const DELETE_RESERVATION_MUTATION = gql`
 `;
 
 const MypageModal = (props) => {
-    const [deleteReservation,{loading}] = useMutation(DELETE_RESERVATION_MUTATION);
+    const [deleteReservation] = useMutation(DELETE_RESERVATION_MUTATION);
     const onDeleteClick = () => {
         const id = Number(props.id);
         const deleteReservationUpdate = (cache,result) => {

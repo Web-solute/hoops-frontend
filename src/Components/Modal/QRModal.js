@@ -5,7 +5,6 @@ import cancel from '../../images/cancel.png';
 import logo2 from '../../images/logo2.png';
 import QRCode from 'react-qr-code';
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 
 // https://www.npmjs.com/package/react-qr-code
