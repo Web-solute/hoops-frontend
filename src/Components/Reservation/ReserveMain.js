@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useState} from "react";
 import { gql,useMutation,useQuery, useLazyQuery } from "@apollo/client";
 import routes from '../../routes';
-import NoticeModal from '../Modal/NoticeModal';
+// import NoticeModal from '../Modal/NoticeModal';
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -203,7 +203,7 @@ const ReserveMain = () => {
     }
 
     // 공지사항
-    const [notice, setNotice] = useState(true);
+    // const [notice, setNotice] = useState(true);
 
     return (
         <>
