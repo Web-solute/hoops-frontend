@@ -155,7 +155,7 @@ function Signup() {
                     <Form.Label><Notice>캠퍼스</Notice></Form.Label>
                     <Form.Select defaultValue="캠퍼스 선택" onChange={onSelect} ref={register({required:"캠퍼스를 선택해주세요"})} name="campus">
                         <option value="-1">캠퍼스 선택</option>
-                        <option value="Seoul">서울</option>
+                        {/* <option value="Seoul">서울</option> */}
                         <option value="Global">글로벌</option>
                     </Form.Select>
                     </Form.Group>
@@ -166,7 +166,7 @@ function Signup() {
                         {option === "Seoul" ? (
                             <>
                             <option>학과 선택</option>
-                            <option>서울 캠퍼스 학과들</option>
+                            {/* <option>서울 캠퍼스 학과들</option> */}
                             </>
                         ) : option === "Global" ? (
                             <>
@@ -175,7 +175,6 @@ function Signup() {
                             <option value="Information_Communication">정보통신공학부</option>
                             </>
                         ) : <>
-                            <option>학과 선택</option>
                             <option>캠퍼스를 선택해주세요</option>
                             </>
                         }
