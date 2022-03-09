@@ -97,6 +97,10 @@ const ReserveMain = () => {
         const finishD = setHours(setMinutes(new Date(), Number(finishArr[1])),Number(finishArr[0]));
         startObj.push(startD);
         finishObj.push(finishD);
+        if(startObj.length === 0){
+            return false;
+        }
+        return true;
     });
     
     const onCompleted = (data) => {

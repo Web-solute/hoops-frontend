@@ -25,7 +25,7 @@ const Manager = () => {
             history.push("/");
         }
         
-    },[Me]);
+    },[Me,history]);
     
     return (
         <Container>

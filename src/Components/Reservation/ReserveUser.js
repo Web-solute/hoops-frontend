@@ -42,11 +42,15 @@ const SearchUser = (props) => {
         <Item w='230px'><datalist id ={props.name}>
             {data?.searchUsers?.filter((val) => {
                 if(props.searchTerm === ""){
-                    return val
-                }else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
-                    return val
+                    return true
                 }
-            }).map((data, index) => ( <option key={index} value={`${data.name} ${data.studentId}`} />))}
+                else if(val.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
+                    return true
+                }
+                else{
+                    return false;
+                }
+            }).map((data, index) => { return <option key={index} value={`${data.name} ${data.studentId}`} />})}
         </datalist ></Item>       
         </>
     );

@@ -85,7 +85,7 @@ const QRmodal = (props) => {
         }
       }, 1000);
       return () => clearInterval(countdown);
-    }, [seconds]);
+    }, [seconds, data, trueQR, falseQR]);
 
     return (
         <Background>

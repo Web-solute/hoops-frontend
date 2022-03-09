@@ -45,7 +45,7 @@ function Mypage() {
             history.push("/");
         }
         
-    },[data]);
+    },[data,studentId,history]);
 
     const logOut = () => {
         history.push(routes.home,{message:"로그아웃되셨습니다!"});
