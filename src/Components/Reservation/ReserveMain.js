@@ -207,7 +207,7 @@ const ReserveMain = () => {
 
     return (
         <>
-            { notice && <NoticeModal setNotice={setNotice} /> } 
+            {/* { notice && <NoticeModal setNotice={setNotice} /> }  */}
             <form onSubmit={handleSubmit(onSubmitValid)}>
                 <Container p='0px'>                            
                     <Subtitle size='17px' className="mt-4">사용할 스터디룸을 선택해주세요</Subtitle>
