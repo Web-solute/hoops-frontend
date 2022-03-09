@@ -4,7 +4,7 @@
 
 ## Prototype
 
-| 리소스          | 링크                                                                          |
+| 리소스          | 링크                                                                           |
 | --------------- | ----------------------------------------------------------------------------- |
 | 웹 UI 개발 링크 | [Figma](https://www.figma.com/file/OEHffeqAsD5BzfhQLZ1vTP/hoops?node-id=0%3A1) |
 
@@ -13,9 +13,9 @@
 
 ## Stack
 
-| Category  | Stack                                                     |
-| --------- | --------------------------------------------------------- |
-| Front-end | `React` `styled-components` `JavaScript` `Apollo GraphQL` |
-| Back-end  | `Node.js` `Express` `PostgreSQL`                          |
-| Design    | `Figma`                                                   |
-| Embedded  | `Raspberry Pi`                                            |
+| Category  | Stack                                                  |
+| --------- | ------------------------------------------------------ |
+| Front-end | `React` `styled-components` `Apollo GraphQL` `Netlify` |
+| Back-end  | `Node.js` `Express` `PostgreSQL` `Heroku`              |
+| Design    | `Figma`                                                |
+| Embedded  | `Raspberry Pi`                                         |
