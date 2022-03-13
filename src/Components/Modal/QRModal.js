@@ -105,7 +105,7 @@ const QRmodal = (props) => {
                         }} src={cancel} alt='cancel'
                         />
                     </Absolute>
-                        <QrText>입장을 위한 QR Code</QrText>
+                        <QrText onClick={ ()=>console.log(data) }>입장을 위한 QR Code</QrText>
                         <QrTimer>{seconds}</QrTimer>
                         <QrContaiener>
                             {(data?.QRValid?.activate === true) ? 
