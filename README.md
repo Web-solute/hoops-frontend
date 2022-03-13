@@ -19,3 +19,7 @@
 | Back-end  | `Node.js` `Express` `PostgreSQL` `Heroku`              |
 | Design    | `Figma`                                                |
 | Embedded  | `Raspberry Pi`                                         |
+
+## License
+
+[MIT](https://github.com/Web-solute/hoops-frontend/blob/master/LICENSE)
