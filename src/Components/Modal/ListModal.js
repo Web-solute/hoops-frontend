@@ -55,20 +55,20 @@ const ListModal = (props) => {
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setList(false) }} src={cancel} alt='cancel'/></Absolute>
                     <Subtitle size='22px' top='40px' onClick={ ()=>console.log(data) }>나의 예약 내역</Subtitle>
-                    {/* 예약 내역이 없는 경우 */}
-                    {/* <Subtitle size='16px' top='15px'>예약 내역이 없습니다!</Subtitle> */}
-                    {/* 예약 내역이 있는 경우 */}
-                    <div style={{ maxHeight: '400px', overflow: 'auto'}}>
-                    {data?.myReservationToday?.map((res)=>(
-                        <ListItem key={res.id}>
-                            <Subtitle size='14px'>{res.room.roomNumber}번 스터디룸</Subtitle>
-                            <Subtitle size='17px'> {res.schedule[0].start}-{res.schedule[res.schedule.length-1].finish}</Subtitle>
-                            <div onClick={() => onClick(res.id)} style={{ display:"inline" ,marginLeft: '7px', verticalAlign: 'middle' }}>
-                                <img src={cancel_button} alt='cancel_button'/>
-                            </div>
-                        </ListItem>
-                    ))}
-                    </div>
+                    { data?.myReservationToday === [] 
+                        ? <Subtitle size='16px' top='15px'>예약 내역이 없습니다!</Subtitle> 
+                        : <div style={{ maxHeight: '400px', overflow: 'auto'}}>
+                            {data?.myReservationToday?.map((res)=>(
+                                <ListItem key={res.id}>
+                                    <Subtitle size='14px'>{res.room.roomNumber}번 스터디룸</Subtitle>
+                                    <Subtitle size='17px'> {res.schedule[0].start}-{res.schedule[res.schedule.length-1].finish}</Subtitle>
+                                    <div onClick={() => onClick(res.id)} style={{ display:"inline" ,marginLeft: '7px', verticalAlign: 'middle' }}>
+                                        <img src={cancel_button} alt='cancel_button'/>
+                                    </div>
+                                </ListItem>
+                            ))}
+                        </div>
+                    }
                     <img src={logo2} height="60" alt='logo2'/>
                 </Flex>
                 </Popup>
