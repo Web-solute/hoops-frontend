@@ -55,7 +55,7 @@ const ListModal = (props) => {
                 <Flex padding='20px'>
                     <Absolute right='15px'><img onClick={ ()=>{ props.setList(false) }} src={cancel} alt='cancel'/></Absolute>
                     <Subtitle size='22px' top='40px' onClick={ ()=>console.log(data) }>나의 예약 내역</Subtitle>
-                    { data?.myReservationToday === [] 
+                    { data?.myReservationToday.length === 0 
                         ? <Subtitle size='16px' top='15px'>예약 내역이 없습니다!</Subtitle> 
                         : <div style={{ maxHeight: '400px', overflow: 'auto'}}>
                             {data?.myReservationToday?.map((res)=>(
