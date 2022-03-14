@@ -65,8 +65,8 @@ const ListModal = (props) => {
                         : <div style={{ maxHeight: '400px', overflow: 'auto'}}>
                             {data?.myReservationToday?.map((res)=>(
                                 <ListItem key={res.id}>
-                                    <Subtitle size='14px'>{res.room.roomNumber}번 스터디룸</Subtitle>
-                                    <Subtitle size='17px'> {res.schedule[0].start}-{res.schedule[res.schedule.length-1].finish}</Subtitle>
+                                    <Subtitle size='13px'>{res.room.roomNumber}번 스터디룸</Subtitle>
+                                    <Subtitle size='16px'> {res.schedule[0].start}-{res.schedule[res.schedule.length-1].finish}</Subtitle>
                                     <div onClick={() => onClick(res.id)} style={{ display:"inline" ,marginLeft: '7px', verticalAlign: 'middle' }}>
                                         <img src={cancel_button} alt='cancel_button'/>
                                     </div>
