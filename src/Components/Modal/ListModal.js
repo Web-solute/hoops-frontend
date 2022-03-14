@@ -4,9 +4,10 @@ import cancel from '../../images/cancel.png';
 import cancel_button from '../../images/cancel_button.png';
 import logo2 from '../../images/logo2.png';
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import MypageModal from "./MypageModal"
 import { gql, useQuery } from "@apollo/client";
+import { waitFor } from "@testing-library/react";
 
 const ListItem = styled.div `
     width: 260px;
@@ -35,25 +36,29 @@ const MY_RESERVATION_TODAY_QUERY = gql`
 const ListModal = (props) => {
     const [cancelModal, setCancelModal] = useState(false);
     const [id,setId] = useState(""); 
-    const {data} = useQuery(MY_RESERVATION_TODAY_QUERY);
-   
+    const {data, refetch} = useQuery(MY_RESERVATION_TODAY_QUERY);
+
+    useEffect(()=>{
+        refetch();
+    },[props.refreshing, refetch])
     const cancelReservation = (e) => {
         console.log('예약이 취소되었습니다');
         setCancelModal(false);
         props.setList(false);
+        props.setRefreshing(false);
     } 
     const onClick = (id) =>{
         setCancelModal(true);
         setId(id);
     }
-
+    
     return (
         <>
         <Background>
             <Window>
                 <Popup>
                 <Flex padding='20px'>
-                    <Absolute right='15px'><img onClick={ ()=>{ props.setList(false) }} src={cancel} alt='cancel'/></Absolute>
+                    <Absolute right='15px'><img onClick={ ()=>{ props.setList(false); props.setRefreshing(false); }} src={cancel} alt='cancel'/></Absolute>
                     <Subtitle size='22px' top='40px' onClick={ ()=>console.log(data) }>나의 예약 내역</Subtitle>
                     { data?.myReservationToday.length === 0 
                         ? <Subtitle size='16px' top='15px'>예약 내역이 없습니다!</Subtitle> 

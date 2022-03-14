@@ -31,12 +31,13 @@ function Mypage() {
     const [list, setList] = useState(false);
     const [logoutModal, setLogoutModal] = useState(false);
     const [changeModal, setChangeModal] = useState(false);
-
+    const [refreshing, setRefreshing] = useState(false);
     const hasToken = useReactiveVar(isLoggedInVar);
     const {studentId} = useParams();
     const {data} = useQuery(ME_QUERY,{
         skip:!hasToken
     });
+    
     useEffect(()=>{
         if(data?.me === null){
             logUserOut();
@@ -58,7 +59,7 @@ function Mypage() {
             <div>
                 <Subtitle size="25px">😄</Subtitle><Smalltext size="20px">안녕하세요, </Smalltext><Subtitle size="24px">{data?.me?.name}</Subtitle><Smalltext size="20px">님</Smalltext>
             </div>
-            <button onClick={()=> setList(true) } style={{ border: 0, background: 'none', marginTop: '30px' }}>
+            <button onClick={()=> {setList(true); setRefreshing(true); } } style={{ border: 0, background: 'none', marginTop: '30px' }}>
                 <img src={list_button} alt='list_button'/>
             </button>
             <button onClick={()=> setLogoutModal(true) } style={{ border: 0, background: 'none', marginTop: '20px' }}>
@@ -72,7 +73,7 @@ function Mypage() {
                 <img src={manager_button} alt='manager_button' style={{ marginTop: '15px' }}/>
             </Link>):null}
 
-            { list && <ListModal setList={setList} /> } 
+            { list && <ListModal refreshing={refreshing} setRefreshing={setRefreshing} setList={setList} /> } 
 
             { logoutModal &&
                 <MypageModal 
