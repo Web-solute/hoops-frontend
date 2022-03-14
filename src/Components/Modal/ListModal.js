@@ -4,10 +4,9 @@ import cancel from '../../images/cancel.png';
 import cancel_button from '../../images/cancel_button.png';
 import logo2 from '../../images/logo2.png';
 import styled from "styled-components";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MypageModal from "./MypageModal"
 import { gql, useQuery } from "@apollo/client";
-import { waitFor } from "@testing-library/react";
 
 const ListItem = styled.div `
     width: 260px;
