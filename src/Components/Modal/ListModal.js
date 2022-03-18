@@ -36,7 +36,7 @@ const ListModal = (props) => {
     const [cancelModal, setCancelModal] = useState(false);
     const [id,setId] = useState(""); 
     const {data, refetch} = useQuery(MY_RESERVATION_TODAY_QUERY);
-    console.log();
+    
     useEffect(()=>{
         refetch();
     },[props.refreshing, refetch])
