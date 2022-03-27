@@ -42,6 +42,7 @@ const ForgotModal = (props) => {
         changePassword({
             variables:{studentId}
         })
+        alert('메일이 발송되었습니다!');
     };
 
     return (
