@@ -41,6 +41,7 @@ const ChangeModal = (props) => {
                 newPassword
             }
         })
+        alert('비밀번호가 변경되었습니다!');
     };
     const clearPasswordError = () => {
         clearErrors("result");
